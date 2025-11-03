@@ -21,14 +21,16 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["./src/packages/ui/components/*"],
+      "@ui/*": ["./src/components/*"],
       "@assets/*": ["./src/assets/*"]
-    }
+    },
+    "types": ["vite-plugin-svgr/client"]
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "../preload/exposedInMainWorld.d.ts"
+    "../preload/exposedInMainWorld.d.ts",
+    "svg.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
