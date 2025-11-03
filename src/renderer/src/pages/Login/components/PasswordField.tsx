@@ -40,7 +40,7 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
             type="button"
             onMouseDown={(e) => e.preventDefault()}
             onClick={toggleVisibility}
-            className="absolute top-1/2 right-6 -translate-y-1/2 p-1 hover:bg-gray-100"
+            className="absolute top-1/2 right-6 -translate-y-1/2 p-1 cursor-pointer"
           >
             {isVisible ? (
               <InvisibleIcon className="hbp:h-6 hbp:w-6 h-5 w-5" />

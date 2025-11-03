@@ -88,12 +88,12 @@ const LoginForm = () => {
       <div className="text-grey-300 text-caption-sm-regular hbp:text-body-lg-regular hbp:mt-[-20px] hbp:gap-[25px] mt-[-16px] flex flex-row gap-5">
         <span
           onClick={() => navigate('/auth/signup')}
-          className="hover:text-grey-200 cursor-pointer"
+          className="cursor-pointer"
         >
           회원가입
         </span>
         <span>|</span>
-        <span className="hover:text-grey-200 cursor-pointer">
+        <span className="cursor-pointer">
           비밀번호 찾기
         </span>
       </div>
