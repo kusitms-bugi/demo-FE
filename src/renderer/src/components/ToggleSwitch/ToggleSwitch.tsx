@@ -1,37 +1,45 @@
 import * as React from 'react';
 import { cn } from '../../utils/cn';
+import SunIcon from '../../assets/sun_icon.svg?react';
+import MoonIcon from '../../assets/moon_icon.svg?react';
 
-interface ToggleSwitchProps {
+interface ThemeToggleSwitchProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
 }
 
-const ToggleSwitch = React.forwardRef<HTMLButtonElement, ToggleSwitchProps>(
-  ({ checked, onChange }, ref) => {
-    return (
-      <button
-        ref={ref}
-        type="button"
-        role="switch"
-        aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={cn(
-          'inline-flex h-[18px] w-[34px] items-center rounded-full px-[3px] transition-colors duration-300 ease-in-out',
-          checked
-            ? 'bg-yellow-400 hover:bg-yellow-500'
-            : 'bg-grey-100 hover:bg-grey-200',
-        )}
-      >
-        <span
-          className={cn(
-            'h-[14px] w-[14px] rounded-full bg-white shadow-[0_0_20px_rgba(0,0,0,0.08)] transition-transform duration-300 ease-in-out',
-            checked ? 'translate-x-[15px]' : 'translate-x-0',
-          )}
-        />
-      </button>
-    );
-  },
-);
+const ThemeToggleSwitch = React.forwardRef<
+  HTMLButtonElement,
+  ThemeToggleSwitchProps
+>(({ checked, onChange }, ref) => {
+  return (
+    <button
+      ref={ref}
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={() => onChange(!checked)}
+      className={cn(
+        'bg-grey-50 relative flex h-[30px] w-fit items-center gap-2 rounded-full px-[3px]',
+      )}
+    >
+      <div className="z-1 flex h-[24px] w-[24px] items-center justify-center">
+        <SunIcon className={cn('[&_path]:stroke-sun-stroke z-10')} />
+      </div>
 
-ToggleSwitch.displayName = 'ToggleSwitch';
-export { ToggleSwitch };
+      <div className="z-1 flex h-[24px] w-[24px] items-center justify-center">
+        <MoonIcon className={cn('[&_path]:stroke-moon-stroke z-10')} />
+      </div>
+
+      <span
+        className={cn(
+          'absolute left-[3px] flex h-[24px] w-[24px] items-center justify-center rounded-full bg-yellow-400 transition-transform duration-400 ease-in-out',
+          checked ? 'translate-x-[32px]' : 'translate-x-[0px]',
+        )}
+      ></span>
+    </button>
+  );
+});
+
+ThemeToggleSwitch.displayName = 'ThemeToggleSwitch';
+export { ThemeToggleSwitch };

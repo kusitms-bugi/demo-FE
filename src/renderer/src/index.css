@@ -28,5 +28,5 @@ body {
     'Helvetica Neue',
     sans-serif;
 
-  @apply bg-[#F9F8F7];
+  @apply bg-grey-25;
 }

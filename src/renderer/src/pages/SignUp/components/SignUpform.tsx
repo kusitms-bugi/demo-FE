@@ -130,7 +130,7 @@ const SignUpForm = () => {
         </div>
         {(errors.email || duplicateMessage) && (
           <div
-            className={`flex items-center gap-1.5 ${
+            className={`flex gap-1.5 ${
               errors.email || duplicateSuccess === false
                 ? 'text-error'
                 : 'text-success'
@@ -162,6 +162,7 @@ const SignUpForm = () => {
         <PasswordField
           {...register('password')}
           hasValue={!!formValues.password}
+          className="mb-2"
         />
 
         {/* 비밀번호 재입력 섹션 */}
@@ -195,7 +196,7 @@ const SignUpForm = () => {
                 : '비밀번호가 일치합니다.';
 
               return (
-                <div className={`mt-1 flex items-center gap-1.5 ${colorClass}`}>
+                <div className={`mt-1 flex gap-1.5 ${colorClass}`}>
                   <Icon />
                   <p className="text-caption-sm-regular">{message}</p>
                 </div>

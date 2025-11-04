@@ -6,7 +6,7 @@ const OnboardingCompletionPage = () => {
   const navigate = useNavigate();
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-[#FDFBF5]">
+    <main className="flex min-h-screen flex-col items-center">
       <div className="relative flex w-full flex-col items-center justify-center px-7">
         {/* 캐릭터 영역 */}
         <CompletionCharacter />
