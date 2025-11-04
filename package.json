@@ -18,11 +18,11 @@
   "scripts": {
     "postinstall": "node scripts/update-electron-vendors.js",
     "dev": "node scripts/watch.js",
-    "dev:renderer": "vite src/renderer",
+    "dev:renderer": "vite",
     "build": "pnpm run build:main && pnpm run build:preload && pnpm run build:renderer",
     "build:main": "vite build src/main",
     "build:preload": "vite build src/preload",
-    "build:renderer": "vite build src/renderer",
+    "build:renderer": "vite build",
     "build:preload:types": "dts-cb -i \"src/preload/tsconfig.json\" -o \"src/preload/exposedInMainWorld.d.ts\"",
     "compile": "cross-env MODE=production pnpm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
     "build:mac": "cross-env MODE=production pnpm run build && electron-builder build --config .electron-builder.config.js --mac",
