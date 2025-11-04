@@ -31,7 +31,7 @@ export default defineConfig({
     host: 'localhost',
   },
   build: {
-    outDir: '../dist/renderer',
+    outDir: path.resolve(__dirname, 'dist/renderer'),
     sourcemap: true,
     emptyOutDir: true,
   },
