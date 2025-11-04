@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   base: './',
   root: 'src/renderer',
-  plugins: [react(), tailwindcss(), svgr()],
+  plugins: [svgr(), react(), tailwindcss()],
   resolve: {
     alias: {
       '@ui/': path.resolve(__dirname, 'src/renderer/src/components') + '/',
@@ -30,16 +30,5 @@ export default defineConfig({
     outDir: '../dist/renderer',
     sourcemap: true,
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        assetFileNames: (assetInfo) => {
-          // SVG 파일은 별도 처리 (svgr이 처리)
-          if (assetInfo.name?.endsWith('.svg')) {
-            return 'assets/[name][extname]';
-          }
-          return 'assets/[name]-[hash][extname]';
-        },
-      },
-    },
   },
 });

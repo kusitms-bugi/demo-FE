@@ -23,14 +23,13 @@
     "paths": {
       "@ui/*": ["./src/components/*"],
       "@assets/*": ["./src/assets/*"]
-    },
-    "types": ["vite-plugin-svgr/client"]
+    }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "../preload/exposedInMainWorld.d.ts",
-    "svg.d.ts"
+    "src/types/*.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
