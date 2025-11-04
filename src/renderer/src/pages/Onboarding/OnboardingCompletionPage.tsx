@@ -1,5 +1,5 @@
-import CompletionCharacter from '../../assets/completion.svg?react';
 import { useNavigate } from 'react-router-dom';
+import CompletionCharacter from '../../assets/completion.svg?react';
 import { Button } from '../../components/Button/Button';
 
 const OnboardingCompletionPage = () => {
