@@ -5,6 +5,7 @@ import Header from './Header/Header';
 const Layout = () => {
   return (
     <div className="hbp:pt-[75px] min-h-screen pt-15">
+      <DevNavbar />
       <Header />
       <Outlet />
     </div>

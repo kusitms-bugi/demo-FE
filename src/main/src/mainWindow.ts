@@ -33,10 +33,7 @@ async function createWindow() {
   const pageUrl =
     import.meta.env.DEV && process.env.VITE_DEV_SERVER_URL !== undefined
       ? process.env.VITE_DEV_SERVER_URL
-      : new URL(
-          join(__dirname, '..', 'renderer', 'index.html'),
-          'file:',
-        ).toString();
+      : 'https://www.bugi.co.kr/';
 
   await browserWindow.loadURL(pageUrl);
 
