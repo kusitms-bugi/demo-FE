@@ -31,6 +31,7 @@ export default [
         ...globals.browser,
         ...globals.es2021,
         ...globals.node,
+        React: 'readonly', //React를 전역으로 인식시키기기
       },
       parser: tsparser,
       parserOptions: {
@@ -57,6 +58,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       ...prettier.rules,
       'react/react-in-jsx-scope': 'off',
+      'react-hooks/incompatible-library': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

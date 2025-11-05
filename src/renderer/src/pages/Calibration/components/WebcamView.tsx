@@ -114,7 +114,11 @@ const WebcamView = ({
             </div>
           )}
           <PoseDetection
-            videoRef={webcamRef as RefObject<Webcam | { video?: HTMLVideoElement | null } | null>}
+            videoRef={
+              webcamRef as RefObject<
+                Webcam | { video?: HTMLVideoElement | null } | null
+              >
+            }
             onPoseDetected={handlePoseDetected}
             isEnabled={isWebcamOn}
           />

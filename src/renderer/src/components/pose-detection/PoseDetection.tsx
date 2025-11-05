@@ -1,5 +1,11 @@
 import { FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision';
-import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
 import Webcam from 'react-webcam';
 
 interface WebcamRef {
@@ -163,7 +169,9 @@ const PoseDetection = ({
         return ref.video || null;
       }
       // Webcam 컴포넌트인 경우 - video 속성이 있을 수 있음
-      return (ref as unknown as { video?: HTMLVideoElement | null })?.video || null;
+      return (
+        (ref as unknown as { video?: HTMLVideoElement | null })?.video || null
+      );
     };
 
     const interval = setInterval(() => {

@@ -3,8 +3,7 @@
 
 @font-face {
   font-family: 'Pretendard';
-  src: url('/fonts/PretendardVariable.woff2')
-    format('woff2-variations');
+  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -28,5 +27,5 @@ body {
     'Helvetica Neue',
     sans-serif;
 
-  @apply bg-[#F9F8F7];
+  @apply bg-grey-25;
 }
