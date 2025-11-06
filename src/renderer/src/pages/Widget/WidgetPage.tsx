@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { WidgetTitleBar } from '../../components/WidgetTitleBar/WidgetTitleBar';
-import Giraffe from '../../assets/widget/mini_giraffe.svg?react';
+import MiniGiraffe from '../../assets/widget/mini_giraffe.svg?react';
+import MediumGiraffe from '../../assets/widget/medium_giraffe.svg?react';
 
 type WidgetSize = 'mini' | 'medium';
 
 /* 레이아웃 전환 기준점 (widgetConfig.ts와 동일) */
 const BREAKPOINT = {
-  width: 192,
-  height: 268,
+  height: 62,
 } as const;
 
 export function WidgetPage() {
@@ -21,8 +21,7 @@ export function WidgetPage() {
 
     /* 창 크기 변경 감지 핸들러 */
     const handleResize = () => {
-      const isMedium =
-        innerWidth > BREAKPOINT.width && innerHeight > BREAKPOINT.height;
+      const isMedium = innerHeight > BREAKPOINT.height;
       /* breakpoint를 넘으면 medium, 아니면 mini */
       setWidgetSize(isMedium ? 'medium' : 'mini');
     };
@@ -69,7 +68,7 @@ function MiniWidgetContent() {
         style={{ width: '80%' }}
       ></div>
       <div className="absolute flex h-full">
-        <Giraffe className="h-full w-full object-contain" />
+        <MiniGiraffe className="h-full w-full object-contain" />
       </div>
     </div>
   );
@@ -80,8 +79,8 @@ function MediumWidgetContent() {
   return (
     <div className="flex h-full w-full flex-col">
       {/* 캐릭터 영역 */}
-      <div className="mb-[2px] flex aspect-[1/1] w-full max-w-[256px] min-w-[185px] flex-1 items-center justify-center rounded-lg bg-linear-[180deg,var(--color-olive-green)_0.18%,var(--color-success)_99.7%]">
-        {' '}
+      <div className="mb-[3px] flex aspect-[1/1] h-full w-full flex-1 rounded-lg bg-linear-[180deg,var(--color-olive-green)_0.18%,var(--color-success)_99.7%]">
+        <MediumGiraffe className="h-full object-contain" />
       </div>
 
       {/* 상세 정보 영역 */}
@@ -90,9 +89,11 @@ function MediumWidgetContent() {
         <div className="h-fit w-full rounded-lg">
           <div className="bg-grey-50 h-3 w-full rounded-full">
             <div
-              className="h-full rounded-lg bg-green-500 bg-linear-[180deg,var(--color-olive-green)_0.18%,var(--color-success)_99.7%] transition-all"
-              style={{ width: '50%' }}
-            />
+              className="flex h-full justify-end rounded-lg bg-green-500 bg-linear-[180deg,var(--color-olive-green)_0.18%,var(--color-success)_99.7%] p-[2px] transition-all duration-500 ease-in-out"
+              style={{ width: '60%' }}
+            >
+              <div className="bg-grey-0 h-2 w-2 rounded-full opacity-50" />
+            </div>
           </div>
         </div>
 

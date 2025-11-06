@@ -1,3 +1,6 @@
+import MiniDragIcon from '../../assets/widget/mini_drag_icon.svg?react';
+import MediumDragIcon from '../../assets/widget/drag_icon.svg?react';
+
 interface WidgetTitleBarProps {
   onClose?: () => void;
   isMini?: boolean; // 미니 모드 여부
@@ -22,11 +25,11 @@ export function WidgetTitleBar({
 
   return (
     <div
-      className={
+      className={`bg-grey-0 flex ${
         isMini
-          ? 'bg-grey-0 mr-1 flex h-full w-2 flex-col'
-          : 'bg-grey-0 mb-1 flex h-2 w-full'
-      }
+          ? 'mr-1 h-full w-2 flex-col items-center justify-center'
+          : 'mb-1 h-2 w-full justify-center'
+      } `}
       style={{
         // 드래그 가능하게 설정 (Electron에서 창 이동 가능)
         // @ts-expect-error: electronAPI 타입 정의 없음
@@ -44,6 +47,14 @@ export function WidgetTitleBar({
         }}
         aria-label="닫기"
       />
+      {isMini ? (
+        <MiniDragIcon className="my-auto" />
+      ) : (
+        <>
+          <MediumDragIcon className="mx-auto" />
+          <span className="bg-grey-0 inline-block w-2" />
+        </>
+      )}
 
       {/* 드래그 영역 (사용자가 창 크기를 조절할 수 있음) */}
     </div>
