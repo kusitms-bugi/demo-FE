@@ -86,29 +86,29 @@ const PoseVisualizer = ({
       postureClass === 'ok'
         ? successColor
         : postureClass === 'bad'
-        ? errorColor
-        : defaultShoulderColor;
+          ? errorColor
+          : defaultShoulderColor;
 
     const earColor =
       postureClass === 'ok'
         ? successColor
         : postureClass === 'bad'
-        ? errorColor
-        : defaultEarColor;
+          ? errorColor
+          : defaultEarColor;
 
     const shoulderLineColor =
       postureClass === 'ok'
         ? successColor
         : postureClass === 'bad'
-        ? errorColor
-        : defaultLineColor;
+          ? errorColor
+          : defaultLineColor;
 
     const midpointLineColor =
       postureClass === 'ok'
         ? successColor
         : postureClass === 'bad'
-        ? errorColor
-        : defaultMidpointLineColor;
+          ? errorColor
+          : defaultMidpointLineColor;
 
     // 부모 컨테이너의 실제 크기 가져오기
     const parent = canvas.parentElement;
@@ -145,11 +145,11 @@ const PoseVisualizer = ({
         const y = landmark.y * displayHeight;
 
         // 랜드마크 점 크기
-        const pointSize = 6;
+        const pointSize = 4;
 
         // 랜드마크 점 그리기 (테두리 효과)
         ctx.beginPath();
-        ctx.arc(x, y, pointSize + 2, 0, 2 * Math.PI); // 테두리
+        ctx.arc(x, y, pointSize + 1, 0, 2 * Math.PI); // 테두리
         ctx.fillStyle = 'white';
         ctx.fill();
 
@@ -259,25 +259,25 @@ const PoseVisualizer = ({
       // 어깨 중점 강조 (테두리)
       ctx.fillStyle = 'white';
       ctx.beginPath();
-      ctx.arc(shoulderMidX, shoulderMidY, 6 + 2, 0, Math.PI * 2);
+      ctx.arc(shoulderMidX, shoulderMidY, 4 + 1, 0, Math.PI * 2);
       ctx.fill();
 
       // 어깨 중점 강조 (원래 점)
       ctx.fillStyle = shoulderColor;
       ctx.beginPath();
-      ctx.arc(shoulderMidX, shoulderMidY, 6, 0, Math.PI * 2);
+      ctx.arc(shoulderMidX, shoulderMidY, 4, 0, Math.PI * 2);
       ctx.fill();
 
       // 귀 중점 강조 (테두리)
       ctx.fillStyle = 'white';
       ctx.beginPath();
-      ctx.arc(earMidX, earMidY, 6 + 2, 0, Math.PI * 2);
+      ctx.arc(earMidX, earMidY, 4 + 1, 0, Math.PI * 2);
       ctx.fill();
 
       // 귀 중점 강조 (원래 점)
       ctx.fillStyle = earColor;
       ctx.beginPath();
-      ctx.arc(earMidX, earMidY, 6, 0, Math.PI * 2);
+      ctx.arc(earMidX, earMidY, 4, 0, Math.PI * 2);
       ctx.fill();
     }
   }, [landmarks, videoWidth, videoHeight, isVisible]);
