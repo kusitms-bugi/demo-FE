@@ -1,8 +1,8 @@
-interface Props {
-  statusText: '정상' | '거북목' | '측정중';
-}
+import { usePostureStore } from '../../../store/usePostureStore';
 
-const MiniRunningPanel = ({ statusText }: Props) => {
+const MiniRunningPanel = () => {
+  const statusText = usePostureStore((state) => state.statusText);
+
   const badgeClass =
     statusText === '거북목'
       ? 'bg-error-50 text-error-600'

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { usePostureStore } from '../../store/usePostureStore';
 import DevNavbar from '../../components/DevNavbar/DevNavbar';
 import {
   PoseLandmark as AnalyzerPoseLandmark,
@@ -18,10 +19,8 @@ import WebcamPanel from './components/WebcamPanel';
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
 const MainPage = () => {
+  const setStatus = usePostureStore((state) => state.setStatus);
   const [isWebcamOn, setIsWebcamOn] = useState(true);
-  const [statusText, setStatusText] = useState<'정상' | '거북목' | '측정중'>(
-    '측정중',
-  );
 
   const classifierRef = useRef(new PostureClassifier());
 
@@ -69,7 +68,7 @@ const MainPage = () => {
       calib.sigma,
       frontal,
     );
-    setStatusText(result.text as '정상' | '거북목');
+    setStatus(result.text as '정상' | '거북목', result.cls);
 
     // 기존 결과 배열 가져오기
     const existingData = localStorage.getItem('classificationResult');
@@ -124,7 +123,7 @@ const MainPage = () => {
               onPoseDetected={handlePoseDetected}
             />
 
-            <MiniRunningPanel statusText={statusText} />
+            <MiniRunningPanel />
           </aside>
         </div>
       </main>
