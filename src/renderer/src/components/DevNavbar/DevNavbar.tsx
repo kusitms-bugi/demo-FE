@@ -18,7 +18,7 @@ const DevNavbar = () => {
     { path: '/onboarding/calibration', label: '캘리브레이션' },
   ];
 
-  // 위젯 토글 핸들러
+  // 위젯 토글
   const handleToggleWidget = async () => {
     try {
       if (window.electronAPI?.widget) {
@@ -62,7 +62,7 @@ const DevNavbar = () => {
               onClick={handleToggleWidget}
               className={`rounded px-3 py-1 text-xs font-medium transition-colors ${
                 isWidgetOpen
-                  ? 'bg-purple-500 text-white'
+                  ? 'bg-purple-500 text-white hover:bg-purple-600'
                   : 'border border-purple-300 bg-purple-50 text-purple-700 hover:bg-purple-100'
               }`}
             >

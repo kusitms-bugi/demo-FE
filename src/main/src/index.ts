@@ -66,12 +66,11 @@ function setupAPIHandlers() {
       throw error;
     }
   });
-
-  /* 위젯 상태 확인 요청 핸들러 */
-  ipcMain.handle('widget:isOpen', () => {
-    return isWidgetWindowOpen();
-  });
 }
+/* 위젯 상태 확인 요청 핸들러 */
+ipcMain.handle('widget:isOpen', () => {
+  return isWidgetWindowOpen();
+});
 
 /**
  * Prevent multiple instances
