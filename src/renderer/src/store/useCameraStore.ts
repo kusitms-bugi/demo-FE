@@ -5,14 +5,18 @@ type CameraState = 'show' | 'hide' | 'exit';
 
 interface CameraStore {
   cameraState: CameraState;
-  setCameraState: (state: CameraState) => void;
+  setShow: () => void;
+  setHide: () => void;
+  setExit: () => void;
 }
 
 export const useCameraStore = create<CameraStore>()(
   persist(
     (set) => ({
       cameraState: 'hide',
-      setCameraState: (state) => set({ cameraState: state }),
+      setShow: () => set({ cameraState: 'show' }),
+      setHide: () => set({ cameraState: 'hide' }),
+      setExit: () => set({ cameraState: 'exit' }),
     }),
     {
       name: 'camera-state-storage',

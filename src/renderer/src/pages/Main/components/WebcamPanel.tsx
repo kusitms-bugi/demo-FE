@@ -21,15 +21,15 @@ const WebcamPanel = ({
   onPoseDetected,
   onToggleWebcam,
 }: Props) => {
-  const { cameraState, setCameraState } = useCameraStore();
+  const { cameraState, setShow, setExit } = useCameraStore();
   const isWebcamOn = cameraState === 'show';
   const isExit = cameraState === 'exit';
 
   const handleStartStop = () => {
     if (isExit) {
-      setCameraState('show');
+      setShow();
     } else {
-      setCameraState('exit');
+      setExit();
     }
   };
 

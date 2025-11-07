@@ -4,7 +4,7 @@ import { useCameraStore } from '../../../store/useCameraStore';
 
 const CameraPermissionButton = () => {
   const navigate = useNavigate();
-  const { setCameraState } = useCameraStore();
+  const { setShow } = useCameraStore();
 
   const requestCameraPermission = async () => {
     try {
@@ -27,7 +27,7 @@ const CameraPermissionButton = () => {
       // 스트림이 완전히 해제될 때까지 약간의 딜레이
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      setCameraState('show'); // Set camera state to 'show' after permission is granted
+      setShow(); // Set camera state to 'show' after permission is granted
 
       console.log('[CameraPermission] Navigating to calibration page...');
       navigate('/onboarding/calibration');

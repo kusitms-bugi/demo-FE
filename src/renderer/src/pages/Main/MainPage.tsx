@@ -20,10 +20,14 @@ const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
 const MainPage = () => {
   const setStatus = usePostureStore((state) => state.setStatus);
-  const { cameraState, setCameraState } = useCameraStore();
+  const { cameraState, setHide, setShow } = useCameraStore();
 
   const handleToggleWebcam = () => {
-    setCameraState(cameraState === 'show' ? 'hide' : 'show');
+    if (cameraState === 'show') {
+      setHide();
+    } else {
+      setShow();
+    }
   };
 
   const classifierRef = useRef(new PostureClassifier());
@@ -48,7 +52,7 @@ const MainPage = () => {
   }, [calib]);
 
   const handleUserMediaError = () => {
-    setCameraState('hide');
+    setHide();
   };
 
   const handlePoseDetected = async (

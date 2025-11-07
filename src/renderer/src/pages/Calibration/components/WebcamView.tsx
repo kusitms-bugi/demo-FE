@@ -36,7 +36,7 @@ const WebcamView = ({
     height: 428,
   });
 
-  const { cameraState, setCameraState } = useCameraStore();
+  const { cameraState, setShow } = useCameraStore();
   const isWebcamOn = cameraState === 'show';
 
   const videoConstraints = {
@@ -55,7 +55,7 @@ const WebcamView = ({
   const handleUserMedia = (stream: MediaStream | null) => {
 
     if (stream) {
-      setCameraState('show');
+      setShow();
       const videoTrack = stream.getVideoTracks()[0];
       if (videoTrack) {
         const settings = videoTrack.getSettings();
@@ -76,6 +76,16 @@ const WebcamView = ({
       console.error('[WebcamView] Error message:', error.message);
     }
   };
+
+  useEffect(() => {
+    if (cameraState === 'hide' || cameraState === 'exit') {
+      if (webcamRef.current && webcamRef.current.video && webcamRef.current.video.srcObject) {
+        const stream = webcamRef.current.video.srcObject as MediaStream;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
+    }
+  }, [cameraState]);
 
   return (
     <div className="relative" ref={containerRef}>
