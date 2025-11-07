@@ -1,4 +1,5 @@
-import { useRef, useState, useEffect, type RefObject } from 'react';
+import SleepIcon from "@assets/sleep.svg?react";
+import { useEffect, useRef, useState, type RefObject } from 'react';
 import Webcam from 'react-webcam';
 import { Timer } from '../../../components/Timer/Timer';
 import {
@@ -7,7 +8,6 @@ import {
 } from '../../../components/pose-detection/PoseAnalyzer';
 import PoseDetection from '../../../components/pose-detection/PoseDetection';
 import PoseVisualizer from '../../../components/pose-detection/PoseVisualizer';
-import SleepIcon from "@assets/sleep.svg?react"
 import { useCameraStore } from '../../../store/useCameraStore';
 
 interface WebcamViewProps {
