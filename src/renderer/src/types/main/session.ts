@@ -36,3 +36,19 @@ export interface SaveMetricsResponse {
   code: string;
   message: string;
 }
+
+/* 세션 리포트 데이터 타입 */
+export interface SessionReportData {
+  totalSeconds: number; // 전체 세션 시간 (초)
+  goodSeconds: number; // 좋은 자세 유지 시간 (초)
+  score: number; // 세션 점수
+}
+
+/* 세션 리포트 응답 타입 */
+export interface SessionReportResponse {
+  timestamp: string;
+  success: boolean;
+  data: SessionReportData;
+  code: string;
+  message: string;
+}

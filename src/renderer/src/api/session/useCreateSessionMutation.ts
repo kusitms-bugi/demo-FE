@@ -31,6 +31,9 @@ export const useCreateSessionMutation = () => {
 
       // sessionId를 localStorage에 저장
       localStorage.setItem('sessionId', res.data.sessionId);
+
+      // 이전 세션의 lastSessionId 삭제 (중복 방지)
+      localStorage.removeItem('lastSessionId');
     },
     onError: (error) => {
       console.error('세션 생성 오류:', error);
