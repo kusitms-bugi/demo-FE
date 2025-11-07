@@ -6,8 +6,8 @@ import {
   PostureClassifier,
   WorldLandmark,
 } from '../../components/pose-detection/PoseAnalyzer';
-import { usePostureStore } from '../../store/usePostureStore';
 import { useCameraStore } from '../../store/useCameraStore';
+import { usePostureStore } from '../../store/usePostureStore';
 import CharacterPanel from './components/CharacterPanel';
 import HighlightsPanel from './components/HighlightsPanel';
 import LevelProgressPanel from './components/LevelProgressPanel';
@@ -109,34 +109,34 @@ const MainPage = () => {
   };
 
   return (
+    <>
+      <main className="bg-grey-25 min-h-screen p-4">
+        {/* 전체 레이아웃: 좌(콘텐츠) / 우(웹캠 패널) - 화면 꽉 차게 */}
+        <div className="grid h-full w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_400px]">
+          {/* 좌측 콘텐츠 영역: 단일 Grid 구성 */}
+          <section className="grid grid-cols-12 content-start gap-6 overflow-y-auto">
+            <CharacterPanel />
+            <SummaryPanel />
+            <LevelProgressPanel />
+            <HighlightsPanel />
+            <TrendPanel />
+          </section>
 
-    <main className="bg-grey-25 min-h-screen p-4">
-      {/* 전체 레이아웃: 좌(콘텐츠) / 우(웹캠 패널) - 화면 꽉 차게 */}
-      <div className="grid h-full w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_400px]">
-        {/* 좌측 콘텐츠 영역: 단일 Grid 구성 */}
-        <section className="grid grid-cols-12 content-start gap-6 overflow-y-auto">
-          <CharacterPanel />
-          <SummaryPanel />
-          <LevelProgressPanel />
-          <HighlightsPanel />
-          <TrendPanel />
-        </section>
+          {/* 우측 사이드 패널: 좌/우 구분선 */}
+          <aside className="bg-grey-0 flex flex-col p-6 rounded-4xl gap-8">
+            <WebcamPanel
+              onUserMediaError={handleUserMediaError}
+              onPoseDetected={handlePoseDetected}
+              onToggleWebcam={handleToggleWebcam}
+            />
 
-        {/* 우측 사이드 패널: 좌/우 구분선 */}
-        <aside className="bg-grey-0 flex flex-col p-6 rounded-4xl gap-8">
-          <WebcamPanel
-            onUserMediaError={handleUserMediaError}
-            onPoseDetected={handlePoseDetected}
-            onToggleWebcam={handleToggleWebcam}
-          />
+            <div className='h-px w-full bg-grey-50' />
 
-          <div className='h-px w-full bg-grey-50' />
-
-          <MiniRunningPanel />
-        </aside>
-      </div>
-    </main>
-
+            <MiniRunningPanel />
+          </aside>
+        </div>
+      </main>
+    </>
   );
 };
 
