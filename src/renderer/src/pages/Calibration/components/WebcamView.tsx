@@ -40,8 +40,8 @@ const WebcamView = ({
   const isWebcamOn = cameraState === 'show';
 
   const videoConstraints = {
-    facingMode: 'user', width: 760,
-    height: 428,
+    facingMode: 'user', width: 1000,
+    height: 563,
   };
 
   const handlePoseDetected = (
@@ -91,16 +91,6 @@ const WebcamView = ({
             onUserMedia={handleUserMedia}
             onUserMediaError={handleUserMediaError}
             className="scale-x-[-1] rounded-[24px]"
-            onLoadedMetadata={() => {
-              if (webcamRef.current && webcamRef.current.video) {
-                const actualWidth = webcamRef.current.video.videoWidth;
-                const actualHeight = webcamRef.current.video.videoHeight;
-                if (actualWidth && actualHeight) {
-                  setVideoDimensions({ width: actualWidth, height: actualHeight });
-                  console.log('[WebcamView] Actual video dimensions from onLoadedMetadata:', actualWidth, actualHeight);
-                }
-              }
-            }}
           />
           {showPoseOverlay && detectedLandmarks.length > 0 && (
             <PoseVisualizer
