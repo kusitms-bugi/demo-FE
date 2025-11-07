@@ -18,9 +18,37 @@ const BREAKPOINT = {
 } as const;
 
 export function WidgetPage() {
-  const [widgetSize, setWidgetSize] = useState<WidgetSize>('mini');
+  const [widgetSize, setWidgetSize] = useState<WidgetSize>('medium');
   /* 기본 상태 기린 */
-  const [postureState, setPostureState] = useState<PostureState>('turtle');
+  const [postureState, setPostureState] = useState<PostureState>('giraffe');
+
+  /* 다크모드 설정 적용 */
+  useEffect(() => {
+    const applyTheme = () => {
+      const isDark = localStorage.getItem('theme') === 'dark';
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    // 초기 테마 적용
+    applyTheme();
+
+    // 메인 창에서 테마 변경 시 자동 반영
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'theme') {
+        applyTheme();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   useEffect(() => {
     /* resize 디바운스 타이머 ID 저장용 변수 */
