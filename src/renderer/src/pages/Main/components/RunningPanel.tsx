@@ -11,6 +11,10 @@ const RunningPanel = () => {
     const statusText = usePostureStore((state) => state.statusText);
     const isTurtle = statusText === '거북목';
 
+    const gradient = isTurtle
+        ? 'linear-gradient(90deg, var(--color-coral-red) 0%, var(--color-error) 100%)'
+        : 'linear-gradient(90deg, var(--color-olive-green) 0.18%, var(--color-success) 99.7%)';
+
     const runningStatus = useMemo(() => {
         return isTurtle ? '엉금엉금 가는중..' : '씽씽 가는 중!';
     }, [isTurtle]);
@@ -38,15 +42,17 @@ const RunningPanel = () => {
                 {/* 게이지바 */}
                 <div className="mt-4 mx-4">
                     {/* 흰색 트랙 */}
-                    <div className="h-6 w-full bg-white rounded-full">
+                    <div className="h-6 w-full bg-white rounded-full relative">
                         {/* 산호색 진행 바 (약 25-30%) */}
                         <div
-                            className={cn(
-                                "h-full rounded-full transition-all duration-1000",
-                                isTurtle ? 'bg-point-red' : 'bg-point-green'
-                            )}
-                            style={{ width: isTurtle ? '25%' : '75%' }}
-                        />
+                            className="h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-[3px]"
+                            style={{
+                                width: isTurtle ? '25%' : '75%',
+                                background: gradient
+                            }}
+                        >
+                            <div className="bg-grey-0 h-[14px] w-[14px] rounded-full opacity-50" />
+                        </div>
                     </div>
                 </div>
 
