@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { usePostureStore } from '../../store/usePostureStore';
-import DevNavbar from '../../components/DevNavbar/DevNavbar';
+import { useEffect, useRef } from 'react';
 import {
   PoseLandmark as AnalyzerPoseLandmark,
   calculatePI,
@@ -8,6 +6,8 @@ import {
   PostureClassifier,
   WorldLandmark,
 } from '../../components/pose-detection/PoseAnalyzer';
+import { usePostureStore } from '../../store/usePostureStore';
+import { useCameraStore } from '../../store/useCameraStore';
 import CharacterPanel from './components/CharacterPanel';
 import HighlightsPanel from './components/HighlightsPanel';
 import LevelProgressPanel from './components/LevelProgressPanel';
@@ -20,7 +20,11 @@ const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
 const MainPage = () => {
   const setStatus = usePostureStore((state) => state.setStatus);
-  const [isWebcamOn, setIsWebcamOn] = useState(true);
+  const { cameraState, setCameraState } = useCameraStore();
+
+  const handleToggleWebcam = () => {
+    setCameraState(cameraState === 'show' ? 'hide' : 'show');
+  };
 
   const classifierRef = useRef(new PostureClassifier());
 
@@ -44,7 +48,7 @@ const MainPage = () => {
   }, [calib]);
 
   const handleUserMediaError = () => {
-    setIsWebcamOn(false);
+    setCameraState('hide');
   };
 
   const handlePoseDetected = async (
@@ -101,33 +105,34 @@ const MainPage = () => {
   };
 
   return (
-    <>
-      <DevNavbar />
-      <main className="bg-grey-50 h-screen min-h-screen">
-        {/* 전체 레이아웃: 좌(콘텐츠) / 우(웹캠 패널) - 화면 꽉 차게 */}
-        <div className="grid h-full w-full grid-cols-1 items-stretch gap-6 p-4 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_400px]">
-          {/* 좌측 콘텐츠 영역: 단일 Grid 구성 */}
-          <section className="grid grid-cols-12 content-start gap-6 overflow-y-auto">
-            <CharacterPanel />
-            <SummaryPanel />
-            <LevelProgressPanel />
-            <HighlightsPanel />
-            <TrendPanel />
-          </section>
 
-          {/* 우측 사이드 패널: 좌/우 구분선 */}
-          <aside className="border-grey-100 flex flex-col gap-6 border-l pl-6">
-            <WebcamPanel
-              isWebcamOn={isWebcamOn}
-              onUserMediaError={handleUserMediaError}
-              onPoseDetected={handlePoseDetected}
-            />
+    <main className="bg-grey-25 min-h-screen p-4">
+      {/* 전체 레이아웃: 좌(콘텐츠) / 우(웹캠 패널) - 화면 꽉 차게 */}
+      <div className="grid h-full w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_400px]">
+        {/* 좌측 콘텐츠 영역: 단일 Grid 구성 */}
+        <section className="grid grid-cols-12 content-start gap-6 overflow-y-auto">
+          <CharacterPanel />
+          <SummaryPanel />
+          <LevelProgressPanel />
+          <HighlightsPanel />
+          <TrendPanel />
+        </section>
 
-            <MiniRunningPanel />
-          </aside>
-        </div>
-      </main>
-    </>
+        {/* 우측 사이드 패널: 좌/우 구분선 */}
+        <aside className="bg-grey-0 flex flex-col p-6 rounded-4xl gap-8">
+          <WebcamPanel
+            onUserMediaError={handleUserMediaError}
+            onPoseDetected={handlePoseDetected}
+            onToggleWebcam={handleToggleWebcam}
+          />
+
+          <div className='h-px w-full bg-grey-50' />
+
+          <MiniRunningPanel />
+        </aside>
+      </div>
+    </main>
+
   );
 };
 

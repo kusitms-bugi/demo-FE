@@ -40,7 +40,6 @@ class EmaSmoother {
 const CalibrationPage = () => {
   const navigate = useNavigate();
   const LOCAL_STORAGE_KEY = 'calibration_result_v1';
-  const [isWebcamOn, setIsWebcamOn] = useState(true); // 기본적으로 웹캠 켜짐
   const [detectedLandmarks, setDetectedLandmarks] = useState<PoseLandmark[]>(
     [],
   );
@@ -207,7 +206,6 @@ const CalibrationPage = () => {
         <div className="flex w-full justify-center gap-12">
           {/* 왼쪽 웹캠 영역 */}
           <WebcamView
-            isWebcamOn={isWebcamOn}
             onPoseDetected={handlePoseDetected}
             showPoseOverlay={true}
             showTimer={isCalibrating}
