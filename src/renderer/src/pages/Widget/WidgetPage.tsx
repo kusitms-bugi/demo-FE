@@ -105,11 +105,11 @@ function MediumWidgetContent({ posture }: { posture: PostureState }) {
     <div className="flex h-full w-full flex-col transition-colors duration-500 ease-in-out">
       {/* 캐릭터 영역 */}
       <div
-        className="mb-[3px] flex h-full w-full flex-1 rounded-lg transition-all duration-500 ease-in-out"
+        className="mini:h-auto mini: mb-[3px] flex aspect-[1/1] h-full w-full flex-1 rounded-lg transition-all duration-500 ease-in-out"
         style={{ background: gradient }}
       >
         {isGiraffe ? (
-          <MediumGiraffe className="h-full object-contain" />
+          <MediumGiraffe className="ml-[-10px] h-full object-contain" />
         ) : (
           <MediumTurtle className="h-full object-contain" />
         )}
