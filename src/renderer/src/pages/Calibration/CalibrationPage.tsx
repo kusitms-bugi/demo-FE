@@ -11,7 +11,7 @@ import {
   PIResult,
   processCalibrationData,
   WorldLandmark
-} from '../../components/pose-detection/PoseAnalyzer';
+} from '../../components/pose-detection';
 import MeasuringPanel from './components/MeasuringPanel';
 import WebcamView from './components/WebcamView';
 import WelcomePanel from './components/WelcomePanel';
@@ -259,9 +259,22 @@ const CalibrationPage = () => {
         current2D as AnalyzerPoseLandmark[],
         landmarksToUse,
       );
+
+      // 스텝 1 에러가 발생했거나 계속 발생 중이면 시간 리셋
+      if (step1Err) {
+        startTimeRef.current = Date.now();
+        setCalibrationProgress(0);
+        setRemainingTime(5);
+        errorResetTimeRef.current = Date.now();
+        setStep1Error(step1Err);
+        // Step 1 에러가 있으면 Step 2 체크 건너뛰기
+        setStep2Error(null);
+        return;
+      }
+
       setStep1Error(step1Err);
 
-      // 스텝 2 예외 케이스 실시간 체크 (충분한 프레임이 쌓인 후)
+      // 스텝 2 예외 케이스 실시간 체크 (충분한 프레임이 쌓인 후, Step 1 에러가 없을 때만)
       if (framesRef.current.length >= 5) {
         const error = getStep2Error(framesRef.current as CalibrationFrame[]);
 
