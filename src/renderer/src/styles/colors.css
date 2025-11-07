@@ -60,14 +60,18 @@
 
   /* widget-color*/
   --color-olive-green: #a1b100;
+  --color-coral-red: #ff6647;
 
   --color-widget-gradient: linear-gradient(
     180deg,
     var(--color-olive-green) 0.18%,
     var(--color-success) 99.7%
   );
-
-  --color-coral-red: #ff6647;
+  --color-widget-red: linear-gradient(
+    180deg,
+    var(--color-coral-red) 0%,
+    var(var(--color-error) 100%)
+  );
 }
 
 @theme inline {
@@ -112,6 +116,7 @@
 
   /* widget-color*/
   --color-olive-green: var(--color-olive-green);
+  --color-coral-red: var(--color-coral-red);
 }
 
 /* Dark mode colors */

@@ -5,7 +5,7 @@ export type WidgetSize = 'mini' | 'medium';
 export const WIDGET_CONFIG = {
   // 기본 시작 크기
   defaultWidth: 200,
-  defaultHeight: 280,
+  defaultHeight: 320,
 
   // 최소 / 최대 크기 (사용자가 조절 가능한 범위)
   minWidth: 150,
@@ -15,8 +15,7 @@ export const WIDGET_CONFIG = {
 
   /* 레이아웃 전환 기준점  */
   breakpoint: {
-    width: 192,
-    height: 268,
+    height: 62,
   },
 
   /* 미니 모드 크기 설정 */
