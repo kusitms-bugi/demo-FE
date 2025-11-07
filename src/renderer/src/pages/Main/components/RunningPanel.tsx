@@ -1,5 +1,6 @@
 import backgroundImage from "@assets/background.svg";
 import bugiVideo from "@assets/video/bugi.gif";
+import RiniVideo from "@assets/video/rini.gif";
 import WidgetIcon from "@assets/widget.svg?react";
 import { useMemo } from 'react';
 import { Button } from '../../../components/Button/Button';
@@ -50,9 +51,9 @@ const RunningPanel = () => {
                 </div>
 
                 {/* 움직이는 동영상 영역 */}
-                <div className="mt-26 px-4 flex items-center justify-center">
+                <div className={cn("px-4 flex items-center justify-center", isTurtle ? 'mt-26' : 'mt-12')}>
                     <img
-                        src={bugiVideo}
+                        src={isTurtle ? bugiVideo : RiniVideo}
                         alt="Running animation"
                         className="w-full h-auto max-h-[320px] rounded-lg object-contain bg-transparent"
                     />
