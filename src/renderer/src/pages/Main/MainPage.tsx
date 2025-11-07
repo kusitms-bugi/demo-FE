@@ -11,6 +11,7 @@ import { usePostureStore } from '../../store/usePostureStore';
 import CharacterPanel from './components/CharacterPanel';
 import HighlightsPanel from './components/HighlightsPanel';
 import LevelProgressPanel from './components/LevelProgressPanel';
+import MainHeader from './components/MainHeader';
 import MiniRunningPanel from './components/MiniRunningPanel';
 import SummaryPanel from './components/SummaryPanel';
 import TrendPanel from './components/TrendPanel';
@@ -115,6 +116,11 @@ const MainPage = () => {
         <div className="grid h-full w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-[1fr_380px] xl:grid-cols-[1fr_400px]">
           {/* 좌측 콘텐츠 영역: 단일 Grid 구성 */}
           <section className="grid grid-cols-12 content-start gap-6 overflow-y-auto">
+            {/* 헤더 */}
+            <div className="col-span-12">
+              <MainHeader />
+            </div>
+
             <CharacterPanel />
             <SummaryPanel />
             <LevelProgressPanel />
