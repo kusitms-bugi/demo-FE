@@ -5,7 +5,7 @@ import { Timer } from '../../../components/Timer/Timer';
 import {
   PoseLandmark,
   WorldLandmark,
-} from '../../../components/pose-detection/PoseAnalyzer';
+} from '../../../components/pose-detection';
 import PoseDetection from '../../../components/pose-detection/PoseDetection';
 import PoseVisualizer from '../../../components/pose-detection/PoseVisualizer';
 import { useCameraStore } from '../../../store/useCameraStore';
@@ -18,6 +18,7 @@ interface WebcamViewProps {
   showPoseOverlay?: boolean;
   showTimer?: boolean;
   remainingTime?: number;
+  onVideoRefReady?: (videoRef: RefObject<Webcam>) => void;
 }
 
 const WebcamView = ({
@@ -25,8 +26,16 @@ const WebcamView = ({
   showPoseOverlay = false,
   showTimer = false,
   remainingTime = 0,
+  onVideoRefReady,
 }: WebcamViewProps) => {
   const webcamRef = useRef<Webcam>(null);
+
+  // 비디오 ref를 부모 컴포넌트에 전달
+  useEffect(() => {
+    if (onVideoRefReady) {
+      onVideoRefReady(webcamRef as RefObject<Webcam>);
+    }
+  }, [onVideoRefReady]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [detectedLandmarks, setDetectedLandmarks] = useState<PoseLandmark[]>(
     [],
