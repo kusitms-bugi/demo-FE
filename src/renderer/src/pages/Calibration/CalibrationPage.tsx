@@ -306,7 +306,7 @@ const CalibrationPage = () => {
     : 'minimum:px-[90px] labtop:px-[105px] desktop:px-[164px]'; // WelcomePanel 상태
 
   return (
-    <main className="bg-grey-50 flex min-h-screen flex-col items-center">
+    <main className="bg-grey-50 flex flex-col items-center h-[calc(100vh-60px)] pt-15 hbp:pt-[75px] hbp:h-[calc(100vh-75px)]">
       <section className={`${paddingClass} flex h-screen w-full items-center justify-center`}>
         {/* 메인 콘텐츠 영역 */}
         <div className="flex w-full justify-center gap-12">

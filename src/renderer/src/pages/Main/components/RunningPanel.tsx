@@ -82,7 +82,7 @@ const RunningPanel = () => {
     };
 
     return (
-        <div className="">
+        <>
             <div className="flex items-center justify-between mb-4">
                 <p className="text-caption-sm-medium text-grey-400">{runningStatus}</p>
                 <Button
@@ -99,7 +99,7 @@ const RunningPanel = () => {
             </div>
 
             <div
-                className="h-[421px] w-full rounded-xl bg-cover bg-center bg-no-repeat overflow-hidden"
+                className="h-[421px] minimum:h-[403px] w-full rounded-xl bg-cover bg-center bg-no-repeat overflow-hidden"
                 style={{ backgroundImage: `url(${backgroundImage})` }}
             >
                 {/* 게이지바 */}
@@ -128,7 +128,7 @@ const RunningPanel = () => {
                     />
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
