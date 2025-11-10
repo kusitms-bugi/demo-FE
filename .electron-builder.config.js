@@ -20,9 +20,9 @@ const config = {
     'dist/main/**',
     'dist/preload/**',
     'dist/renderer/**',
-    'node_modules/**/*',
     'package.json',
   ],
+  asar: true,
   // 빌드 전에 필요한 파일들이 존재하는지 확인
   beforeBuild: async (context) => {
     const fs = require('fs');
