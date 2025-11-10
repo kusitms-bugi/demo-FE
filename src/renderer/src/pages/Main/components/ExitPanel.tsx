@@ -44,18 +44,13 @@ const ExitPanel = () => {
     );
   };
 
-  // API 데이터로 계산 (초 → 분 단위 변환)
-  const totalTime = data?.data.totalSeconds
-    ? Math.floor(data.data.totalSeconds / 60)
-    : 0; // 총 시간 (분)
-  const correctPostureTime = data?.data.goodSeconds
-    ? Math.floor(data.data.goodSeconds / 60)
-    : 0; // 바른 자세 시간 (분)
-  const correctPosturePercentage =
-    totalTime > 0
-      ? Math.round((data!.data.goodSeconds / data!.data.totalSeconds) * 100)
-      : 0; // 바른 자세 비율 (%)
-  const score = data?.data.score || 0; // 바른 자세 점수
+  // 예시 데이터 , 세션 조회 api 수정 후 수정하기
+  const totalTime = 169; // 총 169분 (2시간 49분)
+  const correctPostureTime = 54; // 바른 자세 시간 (분)
+  const correctPosturePercentage = Math.round(
+    (correctPostureTime / totalTime) * 100,
+  ); // 32%
+  const score = 80; // 바른 자세 점수
 
   // CSS 변수에서 색상 가져오기 (다크모드 변경 시 재계산)
   const colors = useMemo(
