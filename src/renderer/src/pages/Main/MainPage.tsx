@@ -31,7 +31,7 @@ const MainPage = () => {
   // 메트릭 데이터를 저장할 ref (리렌더링 방지)
   const metricsRef = useRef<MetricData[]>([]);
 
-  // 마지막 저장 시간을 추적 (0.5초마다 저장용)
+  // 마지막 저장 시간을 추적 (1초마다 저장용)
   const lastSaveTimeRef = useRef<number>(0);
 
   const handleToggleWebcam = () => {
@@ -57,17 +57,7 @@ const MainPage = () => {
     }
   };
 
-  // 30초마다 메트릭 자동 전송
-  useEffect(() => {
-    // 세션이 진행 중일 때만 (카메라가 켜져있을 때)
-    if (cameraState !== 'show') return;
-
-    const interval = setInterval(() => {
-      sendMetricsToServer();
-    }, 30000); // 30초
-
-    return () => clearInterval(interval);
-  }, [cameraState]);
+  // 메트릭은 종료 시에만 서버로 전송됨 (WebcamPanel에서 호출)
 
   // 캘리브레이션 로드
   const calib = (() => {
@@ -115,12 +105,12 @@ const MainPage = () => {
     );
     setStatus(result.text as '정상' | '거북목', result.cls);
 
-    // 메트릭 데이터 수집 (0.5초마다 한 번씩만 저장)
+    // 메트릭 데이터 수집 (1초마다 한 번씩만 저장)
     const currentTime = Date.now();
     const timeSinceLastSave = currentTime - lastSaveTimeRef.current;
 
     if (timeSinceLastSave >= 1000) {
-      // 0.5초(500ms) 이상 지났으면 저장
+      // 1초(1000ms) 이상 지났으면 저장
       metricsRef.current.push({
         score: result.Score,
         timestamp: new Date().toISOString(),
