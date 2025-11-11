@@ -23,6 +23,8 @@
   --color-yellow-800: #bd8700;
   --color-yellow-900: #a67100;
 
+  --color-sementic-brand-primary: #ffbf00;
+
   /* Grey 컬러 팔레트 */
   --color-grey-0: #ffffff;
   --color-grey-25: #f9f8f7;
@@ -73,7 +75,7 @@
   --color-widget-red: linear-gradient(
     180deg,
     var(--color-coral-red) 0%,
-    var(var(--color-error) 100%)
+    var(--color-error) 100%
   );
 }
 
@@ -139,6 +141,8 @@
   --color-yellow-700: #f3cf6d;
   --color-yellow-800: #f7dc97;
   --color-yellow-900: #fae6bd;
+
+  --color-sementic-brand-primary: #ffcb31;
 
   /* Dark mode Grey (역전된 스케일) */
   --color-grey-0: #191917;

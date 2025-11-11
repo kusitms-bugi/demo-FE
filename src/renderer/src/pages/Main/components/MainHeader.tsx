@@ -4,6 +4,7 @@ import ProfileIcon from '@assets/profile.svg?react';
 import SettingIcon from '@assets/setting.svg?react';
 import { useEffect, useState } from 'react';
 import Logo from '../../../assets/logo.svg?react';
+import Symbol from '../../../assets/symbol.svg?react';
 import { Button } from '../../../components/Button/Button';
 import { ThemeToggleSwitch } from '../../../components/ToggleSwitch/ToggleSwitch';
 import { cn } from '../../../utils/cn';
@@ -11,12 +12,13 @@ import { cn } from '../../../utils/cn';
 type TabType = 'dashboard' | 'plan' | 'settings';
 
 const MainHeader = () => {
-  const [isDark, setIsDark] = useState(() => {
-    // localStorage에 값이 있으면 true/false로 변환해서 사용
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    // SSR 안전 가드
+    if (typeof window === 'undefined') return false;
     return localStorage.getItem('theme') === 'dark';
   });
 
-  //테마 상태가 바뀔 때마다 HTML 클래스 + localStorage 업데이트
+  // 테마 상태가 바뀔 때마다 HTML 클래스 + localStorage 업데이트
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -36,10 +38,13 @@ const MainHeader = () => {
   ];
 
   return (
-    <div className="bg-grey-0 flex justify-between rounded-[999px] p-2">
+    <div className="bg-grey-0 flex justify-between rounded-[999px] p-2 mr-4">
       {/* 타이틀 영역 */}
       <div className="flex items-center gap-10">
-        <Logo className="[&>path]:fill-logo-fill h-[32px] w-[139px]" />
+        <div className="flex items-center gap-[10px]">
+          <Symbol className="flex h-[27px] w-[27px]" />
+          <Logo className="hbp:h-[27px] hbp:w-[115px] [&>path]:fill-logo-fill flex h-[22px] w-[92px]" />
+        </div>
 
         {/* 네비게이션 탭 */}
         <nav className="flex gap-2">
@@ -79,6 +84,7 @@ const MainHeader = () => {
           })}
         </nav>
       </div>
+
       <div className="flex items-center gap-2">
         <ThemeToggleSwitch checked={isDark} onChange={setIsDark} />
         <ProfileIcon />

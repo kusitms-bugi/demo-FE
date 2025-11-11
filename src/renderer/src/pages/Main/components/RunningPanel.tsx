@@ -106,7 +106,7 @@ const RunningPanel = () => {
         <div className="mx-4 mt-4">
           {/* 흰색 트랙 */}
           <div className="bg-grey-50 relative h-5 w-full rounded-full">
-            {/* 산호색 진행 바 (약 25-30%) */}
+            {/* 진행 바 */}
             <div
               className="flex h-full items-center justify-end rounded-full py-[3px] pr-[3px] transition-all duration-1000"
               style={{

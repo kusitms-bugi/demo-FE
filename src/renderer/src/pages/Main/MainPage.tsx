@@ -1,10 +1,4 @@
 import { useEffect, useRef } from 'react';
-import summaryImage from '../../assets/ut/attendance_encouragement.png';
-import characterImage from '../../assets/ut/average_posture_score.png';
-import highlightsImage from '../../assets/ut/correct_posture_score.png';
-import trendImage from '../../assets/ut/highlight.png';
-import levelProgressImage from '../../assets/ut/level_reached.png';
-import posturePatternImage from '../../assets/ut/posture_pattern_analysis.png';
 import {
   PoseLandmark as AnalyzerPoseLandmark,
   calculatePI,
@@ -152,80 +146,46 @@ const MainPage = () => {
 
   return (
     <>
-      <main className="bg-grey-25 min-h-screen p-4">
-        {/* 전체 레이아웃: 좌(콘텐츠) / 우(웹캠 패널) - 화면 꽉 차게 */}
-        <div className="grid h-screen w-full grid-cols-[1fr_minmax(336px,400px)] items-stretch gap-6">
-          {/* 좌측 콘텐츠 영역: 스크롤 가능한 세로 스택 */}
-          <section className="flex min-h-0 flex-col gap-2">
-            {/* 헤더 (스크롤 제외) */}
-            <MainHeader />
+      <main className="bg-grey-25 h-screen overflow-hidden flex flex-col p-4">
+        <div className="grid flex-1 min-h-0 w-full items-stretch gap-2 grid-cols-[1fr_minmax(336px,400px)]">
 
-            <div className="flex min-h-0 flex-1 flex-col items-end gap-2 self-stretch overflow-y-auto">
-              <div className="text-caption-xs-regular text-grey-200 mt-[clamp(8px,1.5vh,36px)] flex items-end justify-end">
-                마지막 갱신일: 2025.10.22(수) 17:52
-              </div>
-              {/* ── 상단: 1:2 그리드 ───────────────────────────── */}
-              <div className="grid flex-1 grid-cols-3 grid-rows-2 gap-x-4 gap-y-4 self-stretch">
-                <div className="col-span-1 col-start-1 row-span-2 row-start-1 flex flex-1 flex-col items-start gap-[107px] self-stretch">
-                  <img
-                    src={characterImage}
-                    alt="character"
-                    className="object-fit h-full w-full"
-                  />
-                </div>
-                <div className="col-span-2 col-start-2 row-span-2 row-start-1 grid flex-1 gap-x-2 gap-y-2 self-stretch">
-                  <img
-                    src={summaryImage}
-                    alt="summary"
-                    className="object-fit h-full w-full"
-                  />
-                </div>
-              </div>
+          {/* 좌측 영역 */}
+          <div className='w-full h-full min-h-0'>
+            <div className="flex flex-col h-full min-h-0 gap-[clamp(8px,calc(17.5vw-216px),36px)]">
+              <MainHeader />
+              <div className="flex flex-col flex-1 min-h-0">
 
-              {/* ── 하단: 별도 그리드 (좌 2fr | 우 1fr) ─────────── */}
-              <div className="col-span-1 col-start-1 row-span-3 row-start-3 flex min-h-[300px] flex-1 items-start justify-center gap-4 self-stretch">
-                {/* 왼쪽 컬럼: 위에서 아래로 스택 */}
-                <div className="@container flex min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
-                  <div className="flex h-[170px] flex-col items-start self-stretch">
-                    <img
-                      src={levelProgressImage}
-                      alt="level progress"
-                      className="object-fit h-full w-full"
-                    />
-                  </div>
-                  {/* highlights와 trend를 2열로 배치 (부모 너비 562px 이상일 때) */}
-                  <div className="grid w-full grid-cols-1 gap-4 @[562px]:grid-cols-2">
-                    <div className="flex max-h-[304px] min-h-[234px] w-full flex-col items-end gap-4">
-                      <img
-                        src={highlightsImage}
-                        alt="highlights"
-                        className="object-fit h-full w-full"
-                      />
+                <div className='text-caption-xs-regular text-grey-200 flex items-end justify-end shrink-0 mr-4'>
+                  마지막 갱신일: 2025.10.22(수) 17:52</div>
+
+                {/* 스크롤 영역 래퍼 */}
+                <div className="flex-1 min-h-0 overflow-hidden">
+                  <div className="w-full h-full min-h-full overflow-y-auto overscroll-y-contain pr-4 flex flex-col custom-scrollbar">
+                    {/* 상단 부분 */}
+                    <div className='grid grid-cols-[1fr_2fr] h-[268px] mb-4 gap-4 shrink-0'>
+                      <div className='bg-amber-700'></div>
+                      <div className='bg-grey-0 rounded-3xl'></div>
                     </div>
-                    <div className="flex max-h-[304px] min-h-[234px] w-full flex-col items-end gap-4">
-                      <img
-                        src={trendImage}
-                        alt="trend"
-                        className="object-fit h-full w-full"
-                      />
+
+                    {/* 하단 부분 */}
+                    <div className='flex items-stretch gap-4 flex-1 min-h-max'>
+                      <div className='@container flex flex-col items-start gap-4 flex-1 self-stretch min-w-[552px] w-full min-h-0'>
+                        <div className='h-[170px] w-full bg-grey-0 rounded-3xl shrink-0'>레벨 거부기</div>
+                        <div className='grid grid-cols-1 @[562px]:grid-cols-2 gap-4 w-full flex-1 min-h-0'>
+                          <div className='bg-grey-0 rounded-3xl min-h-[224px] min-w-[270px] w-full h-full'>시계열 그래프</div>
+                          <div className='bg-grey-0 rounded-3xl min-h-[224px] min-w-[270px] w-full h-full'>하이라이트</div>
+                        </div>
+                      </div>
+                      <div className='w-full min-h-[300px] min-w-[330px] max-w-[330px] bg-grey-0 rounded-3xl flex-1'>asd</div>
                     </div>
                   </div>
-                </div>
-
-                {/* 오른쪽 컬럼: 패턴 패널만 */}
-                <div className="h-[360px] min-h-[300px] w-[330px] max-w-[330px]">
-                  <img
-                    src={posturePatternImage}
-                    alt="posture pattern"
-                    className="object-fit h-full w-full"
-                  />
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
-          {/* 우측 사이드 패널: 좌/우 구분선 */}
-          <aside className="bg-grey-0 flex flex-col gap-8 rounded-4xl p-6">
+          {/* 우측영역 */}
+          <div className='bg-grey-0 rounded-4xl w-full h-full p-6 flex flex-col gap-[clamp(16px,calc(16px+(100vh-810px)*16/270),32px)]'>
             <WebcamPanel
               onUserMediaError={handleUserMediaError}
               onPoseDetected={handlePoseDetected}
@@ -236,7 +196,7 @@ const MainPage = () => {
             <div className="bg-grey-50 h-px w-full" />
 
             <MiniRunningPanel />
-          </aside>
+          </div>
         </div>
       </main>
     </>
