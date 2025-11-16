@@ -1,6 +1,6 @@
 import DashboardIcon from '@assets/dashboard.svg?react';
 import PlanIcon from '@assets/plan.svg?react';
-import ProfileIcon from '@assets/profile.svg?react';
+import NotificationIcon from '../../../assets/main/bell_icon.svg?react';
 import SettingIcon from '@assets/setting.svg?react';
 import { useEffect, useState } from 'react';
 import Logo from '../../../assets/logo.svg?react';
@@ -88,7 +88,11 @@ const MainHeader = () => {
 
       <div className="flex items-center gap-2">
         <ThemeToggleSwitch checked={isDark} onChange={setIsDark} />
-        <ProfileIcon />
+        <Button
+          variant="grey"
+          className="h-[34px] w-[34px] p-[7px]"
+          text={<NotificationIcon className="[&>path]:stroke-grey-400" />}
+        />
       </div>
     </div>
   );
