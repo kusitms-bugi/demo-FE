@@ -16,6 +16,7 @@ import MainHeader from './components/MainHeader';
 import MiniRunningPanel from './components/MiniRunningPanel';
 import PosePatternPanel from './components/PosePatternPanel';
 import WebcamPanel from './components/WebcamPanel';
+import { PannelHeader } from '@ui/PannelHeader/PannelHeader';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
@@ -173,9 +174,24 @@ const MainPage = () => {
                     {/* 하단 부분 */}
                     <div className="flex min-h-max flex-1 items-stretch gap-4">
                       <div className="@container flex min-h-0 w-full min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
-                        <div className="bg-grey-0 h-[170px] w-full shrink-0 rounded-3xl">
-                          레벨 거부기
+                        <div className="bg-grey-0 h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
+                          <div className="flex flex-col pl-3">
+                            <PannelHeader>LV.2 거부기까지</PannelHeader>
+                            <p className="flex items-center gap-2">
+                              <span className="text-title-4xl-bold">400</span>
+                              <span className="text-body-lg-meidum text-grey-500">
+                                / 1,200m
+                              </span>
+                            </p>
+                            <div className="bg-grey-50 my-[13.5px] h-3 w-full rounded-full">
+                              {/* 진행 바 */}
+                              <div className="flex h-full items-center justify-end rounded-full py-[3px] pr-[3px] transition-all duration-1000">
+                                <div className="bg-dot h-[8px] w-[8px] rounded-full opacity-50" />
+                              </div>
+                            </div>
+                          </div>
                         </div>
+
                         <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-4 @[562px]:grid-cols-2">
                           <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
                             시계열 그래프
