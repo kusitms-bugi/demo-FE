@@ -12,7 +12,11 @@ import { cn } from '../../../utils/cn';
 
 type TabType = 'dashboard' | 'plan' | 'settings';
 
-const MainHeader = () => {
+interface MainHeaderProps {
+  onClickNotification?: () => void;
+}
+
+const MainHeader = ({ onClickNotification }: MainHeaderProps) => {
   const [isDark, setIsDark] = useState<boolean>(() => {
     // SSR 안전 가드
     if (typeof window === 'undefined') return false;
@@ -89,6 +93,7 @@ const MainHeader = () => {
       <div className="flex items-center gap-2">
         <ThemeToggleSwitch checked={isDark} onChange={setIsDark} />
         <Button
+          onClick={onClickNotification}
           variant="grey"
           className="h-[34px] w-[34px] p-[7px]"
           text={<NotificationIcon className="[&>path]:stroke-grey-400" />}

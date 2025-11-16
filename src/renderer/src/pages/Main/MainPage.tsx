@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSaveMetricsMutation } from '../../api/session/useSaveMetricsMutation';
 import {
   PoseLandmark as AnalyzerPoseLandmark,
@@ -18,7 +18,8 @@ import MiniRunningPanel from './components/MiniRunningPanel';
 import PosePatternPanel from './components/PosePatternPanel';
 import WebcamPanel from './components/WebcamPanel';
 import TotalDistancePanel from './components/TotalDistancePanel';
-import { Button } from '@ui/index';
+import NotificationModal from '../../components/Modal/NotificationModal';
+import { ModalPortal } from '@ui/Modal/ModalPortal';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
@@ -149,6 +150,15 @@ const MainPage = () => {
     }
   };
 
+  /* 모달 오픈 */
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <main className="bg-grey-25 flex h-screen flex-col overflow-hidden p-4">
@@ -156,7 +166,7 @@ const MainPage = () => {
           {/* 좌측 영역 */}
           <div className="h-full min-h-0 w-full">
             <div className="flex h-full min-h-0 flex-col gap-[clamp(8px,calc(4.375vw-48px),36px)]">
-              <MainHeader />
+              <MainHeader onClickNotification={handleOpenModal} />
               <div className="flex min-h-0 flex-1 flex-col">
                 <div className="text-caption-xs-regular text-grey-200 mr-4 flex shrink-0 items-end justify-end">
                   마지막 갱신일: 2025.10.22(수) 17:52
@@ -214,6 +224,11 @@ const MainPage = () => {
 
             <MiniRunningPanel />
           </div>
+          {isOpen && (
+            <ModalPortal>
+              <NotificationModal onClose={handleCloseModal} />
+            </ModalPortal>
+          )}
         </div>
       </main>
     </>
