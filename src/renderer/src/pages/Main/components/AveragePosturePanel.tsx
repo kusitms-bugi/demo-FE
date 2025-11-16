@@ -18,7 +18,7 @@ const AveragePosturePanel = () => {
           <span className="text-caption-xs-meidum h-[26px] w-[61px] rounded-full bg-yellow-50 px-2 py-1 text-yellow-500">
             쑥쑥 기린
           </span>
-          <Character className="aspect-[114.3/127] h-full" />
+          <Character className="aspect-[114.3/127] w-full" />
         </p>
       </div>
 
