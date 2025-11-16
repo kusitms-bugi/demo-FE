@@ -17,6 +17,7 @@ import MainHeader from './components/MainHeader';
 import MiniRunningPanel from './components/MiniRunningPanel';
 import PosePatternPanel from './components/PosePatternPanel';
 import WebcamPanel from './components/WebcamPanel';
+import TotalDistancePanel from './components/TotalDistancePanel';
 import { Button } from '@ui/index';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
@@ -176,9 +177,11 @@ const MainPage = () => {
                     {/* 하단 부분 */}
                     <div className="flex min-h-max flex-1 items-stretch gap-4">
                       <div className="@container flex min-h-0 w-full min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
-                        <div className="bg-grey-0 h-[170px] w-full shrink-0 rounded-3xl">
-                          레벨 거부기
+                        {/*레벨 및 이동거리 section */}
+                        <div className="bg-grey-0 relative h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
+                          <TotalDistancePanel />
                         </div>
+
                         <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-4 @[562px]:grid-cols-2">
                           <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
                             시계열 그래프
