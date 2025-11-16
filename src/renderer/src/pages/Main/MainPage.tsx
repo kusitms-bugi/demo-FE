@@ -17,6 +17,7 @@ import MiniRunningPanel from './components/MiniRunningPanel';
 import PosePatternPanel from './components/PosePatternPanel';
 import WebcamPanel from './components/WebcamPanel';
 import { PannelHeader } from '@ui/PannelHeader/PannelHeader';
+import AchivementMedal from '../../assets/main/achivement_meadl.svg?react';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
@@ -174,20 +175,37 @@ const MainPage = () => {
                     {/* 하단 부분 */}
                     <div className="flex min-h-max flex-1 items-stretch gap-4">
                       <div className="@container flex min-h-0 w-full min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
-                        <div className="bg-grey-0 h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
+                        <div className="bg-grey-0 relative h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
                           <div className="flex flex-col pl-3">
                             <PannelHeader>LV.2 거부기까지</PannelHeader>
                             <p className="flex items-center gap-2">
-                              <span className="text-title-4xl-bold">400</span>
+                              <span className="text-title-4xl-bold text-grey-700">
+                                400
+                              </span>
                               <span className="text-body-lg-meidum text-grey-500">
                                 / 1,200m
                               </span>
                             </p>
-                            <div className="bg-grey-50 my-[13.5px] h-3 w-full rounded-full">
-                              {/* 진행 바 */}
-                              <div className="flex h-full items-center justify-end rounded-full py-[3px] pr-[3px] transition-all duration-1000">
-                                <div className="bg-dot h-[8px] w-[8px] rounded-full opacity-50" />
+                            {/*게이지 바*/}
+                            <div className="bg-grey-50 relative my-[13.5px] h-3 w-[calc(100%-16px)] items-center rounded-full">
+                              <div className="bg-grey-100 absolute top-[2px] left-1/3 z-0 h-2 w-2 -translate-x-1/3 rounded-full"></div>
+                              <div className="bg-grey-100 absolute top-[2px] left-2/3 z-0 h-2 w-2 -translate-x-2/3 rounded-full"></div>
+                              {/*진행바 */}
+                              <div
+                                className="relative z-10 flex h-full items-center justify-end rounded-full bg-yellow-400 py-[3px] pr-[3px] transition-all duration-1000"
+                                style={{ width: '66.7%' }}
+                              >
+                                <div className="h-2 w-2 rounded-full bg-yellow-100 opacity-100" />
                               </div>
+                              <AchivementMedal className="absolute top-1/2 right-[-16px] z-10000 -translate-y-1/2" />
+                            </div>
+                            <div className="text-caption-xs-regular text-grey-300 flex w-full items-center justify-between">
+                              {Array.from(
+                                { length: 4 },
+                                (_, i) => i * (1200 / 3),
+                              ).map((value) => (
+                                <span key={value}>{value}</span>
+                              ))}
                             </div>
                           </div>
                         </div>
