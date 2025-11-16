@@ -9,10 +9,10 @@ export type AverageGraphPeriod = 'weekly' | 'monthly';
 
 type ChartConfig = {
   data: AverageGraphDatum[];
-  maxDomain: number; //y축 최대값
-  fillColor: string; //영역 채우기 색상
-  strokeColor: string; //선 색상
-  gridColor: string; //격자선 색상
+  maxDomain: number;
+  fillColor: string;
+  strokeColor: string;
+  gridColor: string;
   yAxisTicks: number[];
 };
 
@@ -27,12 +27,13 @@ export function useAverageGraphChart(activePeriod: AverageGraphPeriod) {
       setIsDark(document.documentElement.classList.contains('dark'));
     });
     observer.observe(document.documentElement, {
-      attributes: true, //속성 변경 감지지
+      attributes: true,
       attributeFilter: ['class'],
     });
     return () => observer.disconnect();
   }, []);
 
+  /* 그래프 색상 */
   const chartConfig = useMemo<ChartConfig>(() => {
     const gridColorValue = getColor('--color-grey-50', '#efeeed');
     const fillColorValue = getColor('--color-yellow-200', '#ffe28a');

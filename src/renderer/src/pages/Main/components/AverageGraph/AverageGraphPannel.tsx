@@ -26,12 +26,14 @@ const AverageGraphPannel = () => {
     setActivePeriod(isMonthly ? 'monthly' : 'weekly');
   };
 
-  /* 월간일 때는 12개 항목이 부모 너비 100%를 차지하도록 설정,
-   12개 이하면 항상 100%, 12개 초과면 스크롤로 나머지 데이터 표시*/
+  /* 월간일 때는 12개 항목이 부모 너비 100%를 차지하도록 설정 */
+  /* 12개 이하면 항상 100%, 12개 초과면 스크롤로 나머지 데이터 표시 */
   const chartWidth =
     activePeriod === 'monthly' && data.length > 12
       ? (`${(100 / 12) * data.length}%` as `${number}%`)
       : '100%';
+
+  /* 월간일 때만 스크롤 o */
   const showScroll = activePeriod === 'monthly' && data.length > 12;
 
   return (
@@ -85,6 +87,7 @@ const AverageGraphPannel = () => {
               ticks={yAxisTicks}
               width={30}
             />
+            {/* 그래프 hover시 스코어 표기 */}
             <Tooltip
               position={{ y: 20 }}
               contentStyle={{

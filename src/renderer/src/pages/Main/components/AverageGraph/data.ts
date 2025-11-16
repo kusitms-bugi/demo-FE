@@ -5,24 +5,24 @@ export type AverageGraphDatum = {
 
 /* 주간 데이터 (최근 7일)*/
 export const WEEKLY_DATA: AverageGraphDatum[] = [
-  { periodLabel: '1', score: 68 },
-  { periodLabel: '2', score: 72 },
-  { periodLabel: '3', score: 65 },
-  { periodLabel: '4', score: 22 },
-  { periodLabel: '5', score: 78 },
-  { periodLabel: '6', score: 75 },
-  { periodLabel: '7', score: 80 },
+  { periodLabel: '1', score: 30 },
+  { periodLabel: '2', score: 51 },
+  { periodLabel: '3', score: 48 },
+  { periodLabel: '4', score: 72 },
+  { periodLabel: '5', score: 75 },
+  { periodLabel: '6', score: 55 },
+  { periodLabel: '7', score: 71 },
 ];
 
 /*월간 데이터 (최근 31일) */
 export const MONTHLY_DATA: AverageGraphDatum[] = [
-  { periodLabel: '1', score: 65 },
-  { periodLabel: '2', score: 68 },
-  { periodLabel: '3', score: 70 },
-  { periodLabel: '4', score: 22 },
+  { periodLabel: '1', score: 30 },
+  { periodLabel: '2', score: 51 },
+  { periodLabel: '3', score: 48 },
+  { periodLabel: '4', score: 72 },
   { periodLabel: '5', score: 75 },
-  { periodLabel: '6', score: 73 },
-  { periodLabel: '7', score: 78 },
+  { periodLabel: '6', score: 55 },
+  { periodLabel: '7', score: 71 },
   { periodLabel: '8', score: 76 },
   { periodLabel: '9', score: 80 },
   { periodLabel: '10', score: 82 },
