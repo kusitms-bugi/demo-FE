@@ -129,7 +129,7 @@ const RunningPanel = () => {
         {/* 움직이는 동영상 영역 */}
         <div
           className={cn(
-            'relative z-10 flex items-center justify-center px-4 mt-12',
+            'relative z-10 mt-12 flex items-center justify-center px-4',
           )}
         >
           <video

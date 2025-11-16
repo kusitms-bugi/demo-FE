@@ -126,6 +126,14 @@
   /* widget-color*/
   --color-olive-green: var(--color-olive-green);
   --color-coral-red: var(--color-coral-red);
+
+  /* main page color */
+  --color-average-score: linear-gradient(
+    130deg,
+    var(--color-yellow-500) -9.87%,
+    var(--color-yellow-400) 25.52%,
+    var(--color-yellow-200) 97.31%
+  );
 }
 
 /* Dark mode colors */
@@ -178,4 +186,12 @@
   /* widget-color*/
   --color-olive-green: #477d00;
   --color-coral-red: #f15232;
+
+  /* main page color */
+  --color-average-score: linear-gradient(
+    130deg,
+    var(--color-yellow-500) -9.87%,
+    var(--color-yellow-400) 25.52%,
+    var(--color-yellow-200) 97.31%
+  );
 }

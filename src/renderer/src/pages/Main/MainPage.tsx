@@ -10,12 +10,14 @@ import {
 import { useCameraStore } from '../../store/useCameraStore';
 import { usePostureStore } from '../../store/usePostureStore';
 import { MetricData } from '../../types/main/session';
+import AveragePosturePanel from './components/AveragePosturePanel';
 import AttendacePanel from './components/AttendacePanel';
 import HighlightsPanel from './components/HighlightsPanel';
 import MainHeader from './components/MainHeader';
 import MiniRunningPanel from './components/MiniRunningPanel';
 import PosePatternPanel from './components/PosePatternPanel';
 import WebcamPanel from './components/WebcamPanel';
+import { Button } from '@ui/index';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
@@ -164,7 +166,8 @@ const MainPage = () => {
                   <div className="custom-scrollbar flex h-full min-h-full w-full flex-col overflow-y-auto overscroll-y-contain pr-4">
                     {/* 상단 부분 */}
                     <div className="mb-4 grid h-[268px] shrink-0 grid-cols-[1fr_2fr] gap-4">
-                      <div className="bg-amber-700"></div>
+                      {/* 평균 자세 점수 부분 */}
+                      <AveragePosturePanel />
                       <div className="bg-grey-0 rounded-3xl">
                         <AttendacePanel />
                       </div>

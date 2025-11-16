@@ -13,7 +13,10 @@ import {
 import { PannelHeader } from '../../../components/PannelHeader/PannelHeader';
 import { ToggleSwitch } from '../../../components/ToggleSwitch/ToggleSwitch';
 import type { HighlightDatum } from './HighlightsPanel/data';
-import { useHighlightsChart, type HighlightPeriod } from './HighlightsPanel/hooks/useHighlightsChart';
+import {
+  useHighlightsChart,
+  type HighlightPeriod,
+} from './HighlightsPanel/hooks/useHighlightsChart';
 
 const HighlightsPanel = () => {
   const [activePeriod, setActivePeriod] = useState<HighlightPeriod>('weekly');
@@ -38,7 +41,7 @@ const HighlightsPanel = () => {
   };
 
   return (
-    <div className=" flex h-full flex-col rounded-2xl p-5">
+    <div className="flex h-full flex-col rounded-2xl p-5">
       <div className="mb-4 flex items-center justify-between">
         <PannelHeader>하이라이트</PannelHeader>
         <ToggleSwitch
@@ -63,11 +66,23 @@ const HighlightsPanel = () => {
           >
             {weeklyColors ? (
               <defs>
-                <linearGradient id="previousBarGradient" x1="0" y1="1" x2="0" y2="0">
+                <linearGradient
+                  id="previousBarGradient"
+                  x1="0"
+                  y1="1"
+                  x2="0"
+                  y2="0"
+                >
                   <stop offset="0%" stopColor={weeklyColors.previous} />
                   <stop offset="100%" stopColor={weeklyColors.previous} />
                 </linearGradient>
-                <linearGradient id="currentBarGradient" x1="0" y1="1" x2="0" y2="0">
+                <linearGradient
+                  id="currentBarGradient"
+                  x1="0"
+                  y1="1"
+                  x2="0"
+                  y2="0"
+                >
                   <stop offset="0%" stopColor={weeklyColors.current} />
                   <stop offset="100%" stopColor={weeklyColors.current} />
                 </linearGradient>
@@ -92,11 +107,7 @@ const HighlightsPanel = () => {
               ticks={yAxisTicks}
               width={30}
             />
-            <Bar
-              dataKey="value"
-              radius={barRadius}
-              background={false}
-            >
+            <Bar dataKey="value" radius={barRadius} background={false}>
               {data.map((datum: HighlightDatum) => (
                 <Cell
                   key={datum.periodLabel}
@@ -105,7 +116,7 @@ const HighlightsPanel = () => {
                       ? datum.barKey === 'current'
                         ? 'url(#currentBarGradient)'
                         : 'url(#previousBarGradient)'
-                      : monthlyColor ?? undefined
+                      : (monthlyColor ?? undefined)
                   }
                 />
               ))}
