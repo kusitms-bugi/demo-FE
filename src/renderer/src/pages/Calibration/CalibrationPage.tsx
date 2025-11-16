@@ -131,6 +131,7 @@ const CalibrationPage = () => {
   }, [detectedLandmarks.length, step1Error, startCalibration]);
 
   // 캘리브레이션 처리
+  /* eslint-disable react-hooks/purity */
   const startTimeRef = useRef<number>(Date.now());
   const framesRef = useRef<
     Array<{
