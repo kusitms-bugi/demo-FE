@@ -1,7 +1,8 @@
-import { ToggleSwitch } from '@ui/ToggleSwitch/ToggleSwitch';
+import { NotificationToggleSwitch } from '@ui/ToggleSwitch/NotificationToggleSwitch';
 import { useState } from 'react';
 import { useTimeEditor } from './hooks/useTimeEditor';
 import { TimeControlSection } from './components/TimeControlSection';
+import { Button } from '@ui/Button/Button';
 
 interface NotificationModalProps {
   onClose: () => void;
@@ -30,11 +31,11 @@ const NotificationModal = ({ onClose }: NotificationModalProps) => {
       <div className="fixed inset-0 z-999999 h-full w-full bg-black/40">
         <div className="bg-grey-0 fixed top-[45%] left-1/2 flex w-[339px] -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[24px] p-4">
           {/* 알림 허용 */}
-          <div className="bg-grey-25 flex justify-between rounded-[12px] p-3">
+          <div className="bg-grey-25 flex items-center justify-between rounded-[12px] p-3">
             <span className="text-body-lg-semibold text-grey-900">
               알림 허용
             </span>
-            <ToggleSwitch
+            <NotificationToggleSwitch
               checked={isAllow}
               onChange={() => setIsAllow(!isAllow)}
             />
@@ -61,12 +62,13 @@ const NotificationModal = ({ onClose }: NotificationModalProps) => {
           />
 
           {/* 저장하기 버튼 */}
-          <button
+          <Button
             onClick={onClose}
-            className="text-grey-900 text-body-lg-semibold w-full rounded-full bg-yellow-500 py-3 transition-colors hover:bg-yellow-600"
-          >
-            저장하기
-          </button>
+            text="저장하기"
+            variant="primary"
+            size="md"
+            className="mt-2 h-11"
+          />
         </div>
       </div>
     </>
