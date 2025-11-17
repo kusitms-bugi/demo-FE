@@ -22,12 +22,16 @@ export const TimeControlSection = ({
 }: TimeControlSectionProps) => {
   return (
     <div
-      className={`bg-surface-modal-container flex flex-col gap-1 rounded-[12px] p-3 ${isDisabled ? 'pointer-events-none opacity-70' : ''}`}
+      className={`bg-surface-modal-container flex flex-col gap-1 rounded-[12px] p-3 ${isDisabled ? 'pointer-events-none' : ''}`}
     >
       {/* 헤더 */}
       <div className="flex items-center justify-between">
         <span className="text-body-lg-semibold text-grey-900">{title}</span>
-        <NotificationToggleSwitch checked={isEnabled} onChange={onToggle} />
+        <NotificationToggleSwitch
+          checked={isEnabled}
+          onChange={onToggle}
+          isDisabled={isDisabled}
+        />
       </div>
 
       {/* 설명 */}
@@ -37,7 +41,11 @@ export const TimeControlSection = ({
 
       {/* 시간 조절 UI */}
       <div
-        className={`border-grey-50 flex items-center justify-center rounded-[8px] border border-solid ${!isEnabled ? 'pointer-events-none' : ''}`}
+        className={`flex items-center justify-center overflow-hidden rounded-[8px] border border-solid transition-colors ${
+          timeEditor.isEditing
+            ? 'border-sementic-brand-primary'
+            : 'border-grey-50'
+        } ${!isEnabled ? 'pointer-events-none' : ''}`}
       >
         {/* 감소 버튼 */}
         <button

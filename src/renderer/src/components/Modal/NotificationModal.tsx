@@ -33,7 +33,7 @@ const NotificationModal = ({ onClose }: NotificationModalProps) => {
         onClick={onClose}
       >
         <div
-          className="bg-surface-modal fixed top-[45%] left-1/2 flex w-[339px] -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[24px] p-4"
+          className="bg-surface-modal border-grey-0 fixed top-[45%] left-1/2 flex w-[339px] -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[24px] border p-4"
           onClick={(e) => e.stopPropagation()}
         >
           {/* 알림 허용 */}
