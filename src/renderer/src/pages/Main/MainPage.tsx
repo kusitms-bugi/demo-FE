@@ -49,7 +49,6 @@ const MainPage = () => {
 
   // 이전 상태를 저장 (안정화 검사 실패 시 사용)
   const previousStateRef = useRef<{
-
     postureClass: 1 | 2 | 3 | 4 | 5 | 6 | 0;
     score: number;
   }>({
@@ -171,7 +170,6 @@ const MainPage = () => {
           });
         }
         setStatus(
-
           previousStateRef.current.postureClass,
           previousStateRef.current.score,
         );

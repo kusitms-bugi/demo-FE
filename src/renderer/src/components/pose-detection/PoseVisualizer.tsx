@@ -82,7 +82,6 @@ const PoseVisualizer = ({
       .getPropertyValue('--color-yellow-500')
       .trim();
 
-
     // --- 상태에 따른 색상 결정 ---
     // 레벨 1-3: 초록색, 레벨 4-6: 빨간색, 레벨 0(측정중): 노란색
     const LineColor =
@@ -263,7 +262,12 @@ const PoseVisualizer = ({
       ctx.fill();
     }
     // PoseVisualizer.tsx의 useEffect 안에
-    console.log('PoseVisualizer postureClass:', postureClass, 'LineColor:', LineColor);
+    console.log(
+      'PoseVisualizer postureClass:',
+      postureClass,
+      'LineColor:',
+      LineColor,
+    );
   }, [landmarks, videoWidth, videoHeight, isVisible, postureClass]);
 
   if (!isVisible) return null;

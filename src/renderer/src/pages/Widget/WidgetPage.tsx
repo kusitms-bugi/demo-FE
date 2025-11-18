@@ -22,8 +22,6 @@ export function WidgetPage() {
 
   /* usePostureStore에서 실시간 자세 상태 가져오기 */
 
-
-
   /* 실시간 자세 상태 동기화 */
   usePostureSyncWithLocalStorage();
 
