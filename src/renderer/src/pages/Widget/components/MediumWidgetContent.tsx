@@ -2,7 +2,7 @@ import MediumGiraffe from '../../../assets/widget/medium_giraffe.svg?react';
 import MediumTurtle from '../../../assets/widget/medium_turtle.svg?react';
 
 /* 실시간 자세 판별 */
-type PostureState = 'turtle' | 'giraffe';
+type PostureState = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 interface MediumWidgetContentProps {
   posture: PostureState;
@@ -10,13 +10,30 @@ interface MediumWidgetContentProps {
 
 /* 미디엄 위젯 레이아웃 */
 export function MediumWidgetContent({ posture }: MediumWidgetContentProps) {
-  const isGiraffe = posture === 'giraffe';
+  const isGiraffe = [1, 2, 3].includes(posture);
   const gradient = isGiraffe
     ? 'linear-gradient(180deg, var(--color-olive-green) 0.18%, var(--color-success) 99.7%)'
     : 'linear-gradient(180deg, var(--color-coral-red) 0%, var(--color-error) 100%)';
 
-  /* 게이지 비율: 거북목 25%, 정상 75% */
-  const gaugeWidth = isGiraffe ? '75%' : '25%';
+  /* 게이지 비율: 등급별 차등 적용 */
+  let gaugeWidth: string;
+  switch (posture) {
+    case 1:
+    case 6:
+      gaugeWidth = '100%';
+      break;
+    case 2:
+    case 5:
+      gaugeWidth = '70%';
+      break;
+    case 3:
+    case 4:
+      gaugeWidth = '30%';
+      break;
+    default: // posture 0
+      gaugeWidth = '25%';
+      break;
+  }
 
   return (
     <div className="flex h-full w-full flex-col transition-colors duration-500 ease-in-out">

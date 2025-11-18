@@ -1,3 +1,4 @@
+import { getScoreLevel } from '../../utils/getScoreLevel';
 import { EmaSmoother } from './calculations';
 import { ScoreProcessor } from './ScoreProcessor';
 import { FrontalityResult, PIResult, PostureClassification } from './types';
@@ -20,7 +21,7 @@ export class PostureClassifier {
     if (sigma === 0) {
       return {
         text: '측정중',
-        cls: 'warn',
+        cls: 0,
         zScore: 0,
         PI_EMA: 0,
         z_PI: 0,
@@ -64,12 +65,12 @@ export class PostureClassifier {
     // 상태 업데이트
     this.prevState = { PI_EMA, state: newState };
 
-    // UI용 텍스트 변환
-    const text = newState === 'bad' ? '거북목' : '정상';
-    const cls = newState === 'bad' ? 'bad' : 'ok';
+    // Score를 기반으로 6단계 레벨 계산
+    const levelInfo = getScoreLevel(finalScore);
+    const cls = levelInfo.level;
 
     return {
-      text,
+      text: levelInfo.name, // 레벨 이름 (angel-rini, pm-rini, rini, bugi, stone-bugi, tire-bugi)
       cls,
       zScore: finalScore,
       PI_EMA,

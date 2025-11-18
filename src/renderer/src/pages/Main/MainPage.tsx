@@ -27,7 +27,6 @@ const SCORE_UPDATE_INTERVAL_MS = 2000; // 2초 (2000ms)
 const MainPage = () => {
   const setStatus = usePostureStore((state) => state.setStatus);
   const currentScore = usePostureStore((state) => state.score); // 현재 스코어 가져오기 (기존 값 유지용)
-  const currentStatusText = usePostureStore((state) => state.statusText);
   const currentPostureClass = usePostureStore((state) => state.postureClass);
   const { cameraState, setHide, setShow } = useCameraStore();
 
@@ -50,12 +49,11 @@ const MainPage = () => {
 
   // 이전 상태를 저장 (안정화 검사 실패 시 사용)
   const previousStateRef = useRef<{
-    statusText: '정상' | '거북목' | '측정중';
-    postureClass: 'ok' | 'warn' | 'bad' | null;
+
+    postureClass: 1 | 2 | 3 | 4 | 5 | 6 | 0;
     score: number;
   }>({
-    statusText: '측정중',
-    postureClass: null,
+    postureClass: 0,
     score: 0,
   });
 
@@ -155,13 +153,11 @@ const MainPage = () => {
 
       if (shouldUpdate) {
         // 안정화 검사 통과 - 스코어 업데이트
-        const newStatusText = result.text as '정상' | '거북목';
-        const newPostureClass = result.cls;
-        setStatus(newStatusText, newPostureClass, result.Score);
+        // PostureClassifier에서 이미 6단계 레벨을 계산해서 반환함
+        setStatus(result.cls, result.Score);
         // 이전 상태 업데이트
         previousStateRef.current = {
-          statusText: newStatusText,
-          postureClass: newPostureClass,
+          postureClass: result.cls,
           score: result.Score,
         };
         lastScoreUpdateTimeRef.current = currentTime;
@@ -169,29 +165,23 @@ const MainPage = () => {
         // 안정화 검사 실패 - 이전 상태 유지
         if (import.meta.env.DEV) {
           console.log('[안정화 검사 실패] 이전 상태 유지:', {
-            이전상태: previousStateRef.current.statusText,
+            이전레벨: previousStateRef.current.postureClass,
             이전스코어: previousStateRef.current.score,
             현재스코어: result.Score,
           });
         }
         setStatus(
-          previousStateRef.current.statusText,
+
           previousStateRef.current.postureClass,
           previousStateRef.current.score,
         );
         lastScoreUpdateTimeRef.current = currentTime; // 다음 검사까지 2초 대기
       }
     } else {
-      // 2초가 지나지 않았으면 기존 스코어를 유지하면서 상태만 업데이트
-      // currentScore를 전달하여 기존 값이 초기화되지 않도록 함
-      setStatus(
-        result.text as '정상' | '거북목',
-        result.cls,
-        currentScore, // 기존 스코어 유지
-      );
+      // 2초가 지나지 않았으면 기존 스코어와 레벨을 모두 유지
+      setStatus(currentPostureClass, currentScore);
       // 이전 상태도 업데이트 (안정화 검사 실패 시 사용)
       previousStateRef.current = {
-        statusText: currentStatusText,
         postureClass: currentPostureClass,
         score: currentScore,
       };

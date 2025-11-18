@@ -56,11 +56,10 @@ const RunningPanel = () => {
   // 레벨에 따른 그라데이션 색상
   const gradient = useMemo(() => {
     // 레벨이 낮을수록(좋을수록) 초록색, 높을수록(나쁠수록) 빨간색
-    if (levelInfo.level <= 2) {
+    if (levelInfo.level <= 3) {
       return 'linear-gradient(90deg, var(--color-olive-green) 0.18%, var(--color-success) 99.7%)';
-    } else if (levelInfo.level <= 3) {
-      return 'linear-gradient(90deg, var(--color-yellow-400) 0%, var(--color-yellow-500) 100%)';
-    } else {
+    }
+    else {
       return 'linear-gradient(90deg, var(--color-coral-red) 0%, var(--color-error) 100%)';
     }
   }, [levelInfo.level]);
