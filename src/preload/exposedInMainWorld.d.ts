@@ -23,5 +23,9 @@ interface Window {
       close: () => Promise<any>;
       isOpen: () => Promise<any>;
     };
+    notification: {
+      show: (title: string, body: string) => Promise<any>;
+      requestPermission: () => Promise<any>;
+    };
   };
 }

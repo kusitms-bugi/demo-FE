@@ -70,4 +70,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
     close: () => ipcRenderer.invoke('widget:close'),
     isOpen: () => ipcRenderer.invoke('widget:isOpen'),
   },
+
+  /* 시스템 알림 기능 */
+  notification: {
+    show: (title: string, body: string) =>
+      ipcRenderer.invoke('notification:show', title, body),
+    /* 알림 권한 요청 */
+    requestPermission: () =>
+      ipcRenderer.invoke('notification:requestPermission'),
+  },
 });
