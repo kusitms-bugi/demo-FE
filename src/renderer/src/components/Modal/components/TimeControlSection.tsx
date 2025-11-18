@@ -45,12 +45,12 @@ export const TimeControlSection = ({
           timeEditor.isEditing
             ? 'border-sementic-brand-primary'
             : 'border-grey-50'
-        } ${!isEnabled ? 'pointer-events-none' : ''}`}
+        } ${isDisabled || !isEnabled ? 'pointer-events-none' : ''}`}
       >
         {/* 감소 버튼 */}
         <button
           onClick={timeEditor.handlers.decreaseTime}
-          disabled={!isEnabled || timeEditor.time <= 1}
+          disabled={isDisabled || !isEnabled || timeEditor.time <= 1}
           className="bg-modal-button flex h-10 w-10 cursor-pointer items-center justify-center disabled:cursor-not-allowed disabled:opacity-20"
         >
           <MinusIcon className="[&_path]:stroke-grey-500" />
@@ -69,7 +69,7 @@ export const TimeControlSection = ({
           />
         ) : (
           <div
-            aria-disabled={!isEnabled}
+            aria-disabled={isDisabled || !isEnabled}
             onClick={timeEditor.handlers.handleTimeClick}
             className="bg-surface-modal text-body-md-meidum text-grey-900 aria-disabled:bg-surface-modal aria-disabled:text-modal-disabled flex h-10 flex-1 cursor-pointer items-center justify-center"
           >
@@ -80,7 +80,7 @@ export const TimeControlSection = ({
         {/* 증가 버튼 */}
         <button
           onClick={timeEditor.handlers.increaseTime}
-          disabled={!isEnabled}
+          disabled={isDisabled || !isEnabled || timeEditor.time >= 300}
           className="bg-modal-button flex h-10 w-10 cursor-pointer items-center justify-center disabled:cursor-not-allowed disabled:opacity-20"
         >
           <PlusIcon className="[&_path]:stroke-grey-400" />
