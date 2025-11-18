@@ -82,11 +82,16 @@ function setupAPIHandlers() {
 
         console.log('✅ [Notification] 시스템 알림 지원됨');
 
+        /* 아이콘 경로 설정 (개발/프로덕션 환경 구분) */
+        const iconPath = import.meta.env.DEV
+          ? join(app.getAppPath(), 'src', 'main', 'assets', 'Symbol Logo.png')
+          : join(process.resourcesPath, 'Symbol Logo.png');
+
         /* 알림 생성 및 표시 */
         const notification = new Notification({
           title,
           body,
-          /* icon 속성은 선택사항이므로 제거 (없으면 기본 아이콘 사용)*/
+          icon: iconPath,
         });
 
         /* 알림 이벤트 리스너 추가 */
