@@ -44,11 +44,11 @@ const RunningPanel = () => {
     // 레벨 1(가장 좋음): 100%, 레벨 2: 95%, 레벨 3: 70%, 레벨 4: 45%, 레벨 5: 20%, 레벨 6(가장 나쁨): 5%
     const widthMap: Record<number, string> = {
       1: '100%',
-      2: '95%',
-      3: '70%',
-      4: '45%',
-      5: '20%',
-      6: '5%',
+      2: '70%',
+      3: '40%',
+      4: '40%',
+      5: '70%',
+      6: '100%',
     };
     return widthMap[levelInfo.level] || '70%';
   }, [levelInfo.level]);
