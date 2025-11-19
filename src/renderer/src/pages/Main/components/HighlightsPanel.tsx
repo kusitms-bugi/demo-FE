@@ -119,16 +119,16 @@ const HighlightsPanel = () => {
                   key={datum.periodLabel}
                   fill={
                     datum.barKey === 'current'
-                      ? 'url(#currentBarGradient)'   // 이번 주/달
+                      ? 'url(#currentBarGradient)' // 이번 주/달
                       : 'url(#previousBarGradient)' // 저번 주/달
                   }
                 />
               ))}
 
-
               <LabelList
                 dataKey="value"
                 position={labelPosition}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 content={(props: any) => {
                   const { value, index, viewBox } = props;
                   if (viewBox == null || index == null) return null;
