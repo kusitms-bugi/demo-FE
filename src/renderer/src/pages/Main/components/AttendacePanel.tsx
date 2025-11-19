@@ -31,7 +31,9 @@ const Circle = ({ level, today }: CircleProps) => {
       className={[
         'h-[18px] w-[18px] rounded-full',
         colorClass,
-        today ? 'ring-[2px] ring-yellow-500 ring-offset-[2px]' : '',
+        today
+          ? 'ring-[2px] ring-yellow-500 ring-offset-[2px] ring-offset-grey-0'
+          : ''
       ].join(' ')}
     />
   );
@@ -180,7 +182,7 @@ const AttendacePanel = () => {
           uncheckedLabel="월간"
           checkedLabel="연간"
           checked={false}
-          onChange={() => {}}
+          onChange={() => { }}
         />
         <IntensitySlider leftLabel="Less" rightLabel="More" />
       </div>
