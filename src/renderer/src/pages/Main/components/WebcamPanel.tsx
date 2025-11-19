@@ -103,8 +103,22 @@ const WebcamPanel = ({
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className='aspect-video max-w-[352px] max-h-[198px] minimum:h-[162px]'>
+      <div className='aspect-video max-w-[352px] max-h-[198px] relative'>
         <WebcamView onPoseDetected={onPoseDetected} showPoseOverlay={true} />
+        <Button
+          size={'md'}
+          variant={'grey'}
+          text={
+            isWebcamOn ? (
+              <HideIcon className="h-[18px] w-[18px]" />
+            ) : (
+              <ShowIcon className="h-[18px] w-[18px]" />
+            )
+          }
+          onClick={handleToggleCamera}
+          disabled={isPausingSession || isResumingSession}
+          className="h-[30px] w-[30px] px-0 absolute top-2 right-2"
+        />
       </div>
       <div className="flex gap-2">
         <Button
@@ -123,20 +137,7 @@ const WebcamPanel = ({
           onClick={handleStartStop}
           disabled={isCreatingSession || isStoppingSession}
         />
-        <Button
-          size={'md'}
-          variant={'grey'}
-          text={
-            isWebcamOn ? (
-              <HideIcon className="h-6 w-6" />
-            ) : (
-              <ShowIcon className="h-6 w-6" />
-            )
-          }
-          onClick={handleToggleCamera}
-          disabled={isPausingSession || isResumingSession}
-          className="h-11 w-11 px-0"
-        />
+
       </div>
     </div>
   );
