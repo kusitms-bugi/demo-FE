@@ -22,8 +22,10 @@ const STEP_DATA = [
   },
   {
     title: '데이터로 보는 대시보드',
-    description:
+    description: [
       '주간, 월간 단위의 개인화 통계와 패턴 분석을 통해 나도 몰랐던 나의 자세 습관을 발견할 수 있어요.',
+      'AI가 제안하는 맞춤형 팁을 통해 자발적이고 지속적인 변화를 느껴보세요.',
+    ],
   },
   {
     title: '스마트 알림',
@@ -31,9 +33,11 @@ const STEP_DATA = [
       '자세가 심하게 나빠지거나 스트레칭이 필요한 순간을 AI가 정확하게 포착하여 똑똑하게 알려드려요.',
   },
   {
-    title: '목표 설정',
-    description:
+    title: '즐거운 게임을 통한 자세 교정',
+    description: [
       '건강 관리는 지루하다는 편견을 깨기 위해 게이미페케이션 요소를 넣었어요.',
+      '바른 자세를 유지할수록 나의 캐릭터가 레벨업하고 더 빨리 달려 보상을 받을 수 있어요.',
+    ],
   },
 ];
 
@@ -77,9 +81,17 @@ const InfoPanel = ({ currentStep, onNext }: InfoPanelProps) => {
             <span className="text-headline-3xl-bold text-grey-700">
               {stepData.title}
             </span>
-            <span className="text-body-md-meidum text-grey-400">
-              {stepData.description}
-            </span>
+            {Array.isArray(stepData.description) ? (
+              <span className="text-body-md-meidum text-grey-400 flex flex-col gap-6">
+                {stepData.description.map((desc, index) => (
+                  <span key={index}>{desc}</span>
+                ))}
+              </span>
+            ) : (
+              <span className="text-body-md-meidum text-grey-400">
+                {stepData.description}
+              </span>
+            )}
           </p>
         </div>
       </div>

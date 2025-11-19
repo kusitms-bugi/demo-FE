@@ -4,6 +4,7 @@ import FirstImage from '@assets/onboarding/first_image.svg?react';
 import SecondImage from '@assets/onboarding/second_image.svg?react';
 import ThirdImage from '@assets/onboarding/third_image.svg?react';
 import FourthImage from '@assets/onboarding/fourth_image.svg?react';
+import RockIcon from '@assets/onboarding/rock_icon.svg?react';
 
 /* 단계별 이미지 (1단계는 null, 2~5단계는 이미지) */
 const STEP_IMAGES = [null, FirstImage, SecondImage, ThirdImage, FourthImage];
@@ -28,7 +29,7 @@ const ImageDescriptionPannel = ({
             onClick={onPrev}
             className="absolute top-5 left-5 cursor-pointer p-2"
           >
-            <PrevIcon />
+            <PrevIcon className="[&_path:first-child]:fill-grey-25 [&_path:last-child]:stroke-grey-500 [&_path:last-child]:fill-none" />
           </div>
         )}
 
@@ -41,9 +42,12 @@ const ImageDescriptionPannel = ({
           )
         )}
 
-        <p className="text-caption-xs-regular text-grey-200 absolute bottom-6">
-          영상은 사용자의 PC에서만 처리되며, 어디에도 저장되거나 전송되지 않으니
-          안심하세요.
+        <p className="text-caption-xs-regular text-grey-200 absolute bottom-6 flex items-center gap-1">
+          <RockIcon />
+          <span>
+            영상은 사용자의 PC에서만 처리되며, 어디에도 저장되거나 전송되지
+            않으니 안심하세요.
+          </span>
         </p>
       </div>
     </div>
