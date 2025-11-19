@@ -9,6 +9,7 @@ import EmailVerificationPage from '../pages/SignUp/EmailVerificationPage';
 import ResendVerificationPage from '../pages/SignUp/ResendVerificationPage';
 import SignUpPage from '../pages/SignUp/SignUpPage';
 import { WidgetPage } from '../pages/Widget/WidgetPage';
+import OnboardinInitPage from '../pages/Onboarding/OnboardingInitPage';
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: '', element: <OnboardingPage /> },
       { path: 'calibration', element: <CalibrationPage /> },
       { path: 'completion', element: <OnboardingCompletionPage /> },
+      { path: 'init', element: <OnboardinInitPage /> },
     ],
   },
   {
