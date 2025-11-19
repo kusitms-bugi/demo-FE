@@ -56,7 +56,7 @@ const MainHeader = ({ onClickNotification }: MainHeaderProps) => {
             isApplyingSystemTheme.current = false;
           }, 0);
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           console.error('시스템 테마 조회 실패:', error);
           isApplyingSystemTheme.current = false;
         });
