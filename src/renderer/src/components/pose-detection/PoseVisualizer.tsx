@@ -261,13 +261,7 @@ const PoseVisualizer = ({
       ctx.arc(earMidX, earMidY, 4, 0, Math.PI * 2);
       ctx.fill();
     }
-    // PoseVisualizer.tsx의 useEffect 안에
-    console.log(
-      'PoseVisualizer postureClass:',
-      postureClass,
-      'LineColor:',
-      LineColor,
-    );
+
   }, [landmarks, videoWidth, videoHeight, isVisible, postureClass]);
 
   if (!isVisible) return null;

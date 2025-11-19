@@ -24,11 +24,11 @@ export function MiniWidgetContent({ posture }: MiniWidgetContentProps) {
       break;
     case 2:
     case 5:
-      gaugeWidth = '70%';
+      gaugeWidth = '75%';
       break;
     case 3:
     case 4:
-      gaugeWidth = '30%';
+      gaugeWidth = '50%';
       break;
     default: // posture 0
       gaugeWidth = '25%';

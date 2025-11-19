@@ -4,7 +4,13 @@ import { PostureStabilizer } from './PostureStabilizer';
 import { ScoreProcessor } from './ScoreProcessor';
 import { FrontalityResult, PIResult, PostureClassification } from './types';
 
-const SCORE_UPDATE_INTERVAL_MS = 500; // 안정화 검사 및 점수 업데이트 주기
+// 안정화 검사 및 점수 업데이트 주기
+// 거북이/기린 경계 전환: 매우 빠르게 반영 (100ms)
+// 일반 레벨 변경: 빠르게 반영 (150ms)
+// 레벨 유지 시: 더 빠르게 반영 (200ms)
+const SCORE_UPDATE_INTERVAL_MS_NORMAL = 200; // 일반 업데이트 주기
+const SCORE_UPDATE_INTERVAL_MS_LEVEL_CHANGE = 150; // 레벨 변경 시 주기
+const SCORE_UPDATE_INTERVAL_MS_BOUNDARY = 50; // 거북이/기린 경계 전환 시 주기
 
 // 자세 판정 엔진
 export class PostureClassifier {
@@ -15,7 +21,8 @@ export class PostureClassifier {
 
   private emaSmoother = new EmaSmoother(0.25);
   private scoreProcessor = new ScoreProcessor();
-  private stabilizer = new PostureStabilizer(500, 0.5, 5); // windowMs=500ms, threshold=0.5, minBufferSize=5
+  // windowMs=300ms, threshold=0.6, minBufferSize=3으로 조정하여 더 빠른 반응
+  private stabilizer = new PostureStabilizer(300, 0.6, 3);
 
   // 마지막으로 반환된 안정화된 상태
   private lastStableState: PostureClassification | null = null;
@@ -63,17 +70,37 @@ export class PostureClassifier {
     // 안정화 버퍼에 현재 점수 추가
     this.stabilizer.addScore(currentClassification.Score, currentTime);
 
-    // 업데이트 주기(500ms)가 되지 않았으면 이전 상태 반환
-    if (
-      currentTime - this.lastScoreUpdateTime < SCORE_UPDATE_INTERVAL_MS &&
-      this.lastStableState
-    ) {
+    // 레벨 변경 여부 확인
+    const levelChanged = this.lastStableState
+      ? this.lastStableState.cls !== currentClassification.cls
+      : false;
+
+    // 거북이/기린 경계 전환 여부 확인 (레벨 3↔4 전환)
+    const isBoundaryCrossing =
+      levelChanged &&
+      this.lastStableState &&
+      ((this.lastStableState.cls === 3 && currentClassification.cls === 4) ||
+        (this.lastStableState.cls === 4 && currentClassification.cls === 3));
+
+    // 업데이트 주기 결정: 경계 전환 > 레벨 변경 > 일반 업데이트
+    const requiredInterval = isBoundaryCrossing
+      ? SCORE_UPDATE_INTERVAL_MS_BOUNDARY
+      : levelChanged
+        ? SCORE_UPDATE_INTERVAL_MS_LEVEL_CHANGE
+        : SCORE_UPDATE_INTERVAL_MS_NORMAL;
+
+    // 업데이트 주기가 되지 않았으면 이전 상태 반환
+    const timeSinceLastUpdate = currentTime - this.lastScoreUpdateTime;
+    if (timeSinceLastUpdate < requiredInterval && this.lastStableState) {
       return this.lastStableState;
     }
 
     // 안정화 검사
+    // 거북이/기린 경계 전환 시에는 threshold를 완화하여 더 빠르게 반영
+    const relaxedThreshold = isBoundaryCrossing ? 0.6 * 2 : undefined; // 경계 전환 시 2배 완화
     const shouldUpdate = this.stabilizer.shouldUpdate(
       currentClassification.Score,
+      relaxedThreshold,
     );
 
     if (shouldUpdate) {

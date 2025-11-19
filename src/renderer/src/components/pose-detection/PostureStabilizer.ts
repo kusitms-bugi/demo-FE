@@ -36,24 +36,40 @@ export class PostureStabilizer {
   /**
    * 현재 Score가 안정화 검사를 통과하는지 확인합니다.
    * @param currentScore 현재 프레임의 Score
+   * @param relaxedThreshold 선택적 완화된 threshold (기본값: this.threshold)
    * @returns true면 업데이트 허용, false면 이전 상태 유지
    */
-  public shouldUpdate(currentScore: number): boolean {
+  public shouldUpdate(
+    currentScore: number,
+    relaxedThreshold?: number,
+  ): boolean {
     // 버퍼에 충분한 데이터가 없으면 업데이트 허용
     if (this.scoreBuffer.length < this.minBufferSize) {
       return true;
     }
 
-    // 윈도우 동안의 평균 계산
-    const averageScore =
-      this.scoreBuffer.reduce((sum, entry) => sum + entry.score, 0) /
-      this.scoreBuffer.length;
+    // 현재 점수는 이미 버퍼에 추가되어 있으므로, 이전 점수들만으로 평균 계산
+    // 버퍼의 마지막 항목이 현재 점수이므로, 그 이전 항목들의 평균을 계산
+    const previousScores = this.scoreBuffer.slice(0, -1);
 
-    // 현재 프레임과 평균의 오차 계산
+    // 이전 점수가 없으면 (버퍼에 현재 점수만 있으면) 업데이트 허용
+    if (previousScores.length === 0) {
+      return true;
+    }
+
+    // 이전 점수들의 평균 계산
+    const averageScore =
+      previousScores.reduce((sum, entry) => sum + entry.score, 0) /
+      previousScores.length;
+
+    // 현재 프레임과 이전 점수들의 평균의 오차 계산
     const scoreDifference = Math.abs(currentScore - averageScore);
 
+    // 사용할 threshold 결정 (완화된 threshold가 제공되면 사용)
+    const effectiveThreshold = relaxedThreshold ?? this.threshold;
+
     // 오차가 임계값보다 크면 이전 상태 유지
-    if (scoreDifference > this.threshold) {
+    if (scoreDifference > effectiveThreshold) {
       return false;
     }
 
@@ -71,10 +87,12 @@ export class PostureStabilizer {
     threshold: number;
     shouldUpdate: boolean;
   } {
+    // 현재 점수를 제외한 이전 점수들의 평균 계산
+    const previousScores = this.scoreBuffer.slice(0, -1);
     const averageScore =
-      this.scoreBuffer.length > 0
-        ? this.scoreBuffer.reduce((sum, entry) => sum + entry.score, 0) /
-          this.scoreBuffer.length
+      previousScores.length > 0
+        ? previousScores.reduce((sum, entry) => sum + entry.score, 0) /
+          previousScores.length
         : currentScore;
     const scoreDifference = Math.abs(currentScore - averageScore);
     const shouldUpdate = this.shouldUpdate(currentScore);
