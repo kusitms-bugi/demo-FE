@@ -24,6 +24,11 @@
   font-weight: 600;
 }
 
+@utility text-headline-3xl-bold {
+  font-size: 24px;
+  font-weight: 700;
+}
+
 @utility text-headline-2xl-regular {
   font-size: 22px;
   font-weight: 400;
