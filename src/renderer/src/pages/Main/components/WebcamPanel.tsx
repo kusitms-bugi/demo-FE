@@ -118,7 +118,7 @@ const WebcamPanel = ({
             )
           }
           onClick={handleToggleCamera}
-          disabled={isPausingSession || isResumingSession}
+          disabled={isExit || isPausingSession || isResumingSession}
           className="absolute top-2 right-2 h-[30px] w-[30px] px-0"
         />
       </div>
