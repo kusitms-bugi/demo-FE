@@ -30,7 +30,7 @@ const WebcamPanel = ({
   onSendMetrics,
 }: Props) => {
   const { cameraState, setShow, setHide, setExit } = useCameraStore();
-  const { toggleWidget } = useWidget();
+  const { toggleWidget, isWidgetOpen } = useWidget();
   const isWebcamOn = cameraState === 'show';
   const isExit = cameraState === 'exit';
 
@@ -51,7 +51,7 @@ const WebcamPanel = ({
         },
       });
     } else {
-      // 종료하기: 메트릭 전송 → 세션 중단 → 카메라 종료
+      // 종료하기: 메트릭 전송 → 세션 중단 → 카메라 종료 → 위젯 닫기
       const sessionId = localStorage.getItem('sessionId');
       if (sessionId) {
         // 1. 수집된 메트릭을 서버로 전송
@@ -61,11 +61,19 @@ const WebcamPanel = ({
         stopSession(sessionId, {
           onSuccess: () => {
             setExit();
+            // 3. 위젯이 열려있으면 닫기
+            if (isWidgetOpen) {
+              toggleWidget();
+            }
           },
         });
       } else {
         // sessionId가 없으면 그냥 카메라만 종료
         setExit();
+        // 위젯이 열려있으면 닫기
+        if (isWidgetOpen) {
+          toggleWidget();
+        }
       }
     }
   };
@@ -143,7 +151,8 @@ const WebcamPanel = ({
           size="md"
           variant="sub"
           onClick={toggleWidget}
-          className="h-11 w-[84px] px-[12px] py-[10px]"
+          disabled={isExit}
+          className="h-11 w-[84px] px-[12px] py-[10px] disabled:pointer-events-none"
           text={
             <div className="text-body-md-medium flex items-center gap-1 text-yellow-500">
               <WidgetIcon className="h-6 w-6" />
