@@ -50,6 +50,9 @@ export const useStopSessionMutation = () => {
 
       // 레벨 쿼리 갱신
       queryClient.invalidateQueries({ queryKey: ['level'] });
+
+      // 자세 그래프 쿼리 갱신
+      queryClient.invalidateQueries({ queryKey: ['postureGraph'] });
     },
     onError: (error) => {
       console.error('세션 중단 오류:', error);
