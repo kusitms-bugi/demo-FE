@@ -13,7 +13,7 @@ const TotalDistance = () => {
   return (
     <div className="flex flex-col pl-3">
       <PannelHeader>
-        {isLoading ? '로딩 중...' : `LV.${level + 1} 거부기까지`}
+        {isLoading ? '로딩 중...' : `LV.${level + 1}  `}
       </PannelHeader>
       <p className="flex items-center gap-2">
         <span className="text-title-4xl-bold text-grey-700">
