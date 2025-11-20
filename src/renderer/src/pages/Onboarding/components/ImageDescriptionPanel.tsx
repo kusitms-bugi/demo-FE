@@ -55,6 +55,18 @@ const ImageDescriptionPannel = ({
     return () => observer.disconnect();
   }, []);
 
+  /* 이미지 프리로드 */
+  useEffect(() => {
+    const allImages = [...STEP_IMAGES_LIGHT, ...STEP_IMAGES_DARK].filter(
+      (src): src is string => src !== null,
+    );
+
+    allImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const stepImages = isDark ? STEP_IMAGES_DARK : STEP_IMAGES_LIGHT;
   const stepImage = stepImages[currentStep - 1];
 
@@ -71,7 +83,6 @@ const ImageDescriptionPannel = ({
           </div>
         )}
 
-        {/* 1단계: FirstImageDescription, 2~5단계: 이미지 */}
         <div
           key={currentStep}
           className={`flex aspect-[784/510] w-full max-w-[1010px] items-center p-5 ${direction === 'next' ? 'animate-slide-next' : 'animate-slide-prev'}`}
@@ -84,7 +95,9 @@ const ImageDescriptionPannel = ({
                 key={`${currentStep}-${isDark}`}
                 src={stepImage}
                 alt={`step ${currentStep}`}
-                className="animate-fade-in h-full object-contain"
+                className={`animate-fade-in h-full object-contain ${!isDark ? 'border-grey-100 rounded-[12px] border shadow-[0_0_24px_0_rgba(0,0,0,0.12)]' : ''}`}
+                loading="eager"
+                fetchPriority="high"
               />
             )
           )}
