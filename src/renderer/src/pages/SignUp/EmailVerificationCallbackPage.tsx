@@ -1,6 +1,19 @@
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useVerifyEmailMutation } from '../../api/signup/verifyEmail';
 import CompletionCharacter from '../../assets/completion.svg?react';
 
 const EmailVerificationCallbackPage = () => {
+    const [searchParams] = useSearchParams()
+
+    const verifyEmailMutation = useVerifyEmailMutation();
+    useEffect(() => {
+        const token = searchParams.get('token');
+        if (token) {
+            verifyEmailMutation.mutate(token);
+        }
+    }, [searchParams]);
+
     return (
         <main className="hbp:min-h-[calc(100vh-75px)] flex min-h-[calc(100vh-60px)] flex-col items-center justify-center">
             <div className="hbp:mx-auto hbp:max-w-screen-lg hbp:px-10 relative w-full overflow-visible">

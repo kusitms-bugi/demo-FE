@@ -1,28 +1,20 @@
+import { useNavigate } from 'react-router-dom';
+import {
+  useResendVerifyEmailMuation
+} from '../../api/signup/verifyEmail';
 import { Button } from '../../components/Button/Button';
+import { useEmailStore } from '../../store/useSignUpStore';
 import EmailHeroSection from './components/EmailHeroSection';
 import ResendSection from './components/ResendSection';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import {
-  useResendVerifyEmailMuation,
-  useVerifyEmailMutation,
-} from '../../api/signup/verifyEmail';
-import { useEmailStore } from '../../store/useSignUpStore';
 
 const EmailVerificationPage = () => {
-  const [searchParams] = useSearchParams();
-  const verifyEmailMutation = useVerifyEmailMutation();
+
   const resendverifyEmailMutation = useResendVerifyEmailMuation();
   const email = useEmailStore((state) => state.email);
   const navigate = useNavigate();
 
   /* 토큰 여부에 따른 이메일 인증 */
-  useEffect(() => {
-    const token = searchParams.get('token');
-    if (token) {
-      verifyEmailMutation.mutate(token);
-    }
-  }, [searchParams]);
+
 
   /*이메일 다시 보내기 */
   const onResendClick = () => {
