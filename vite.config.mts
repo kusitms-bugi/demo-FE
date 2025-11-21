@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/',
   root: 'src/renderer',
   plugins: [svgr(), react(), tailwindcss()],
   resolve: {
