@@ -23,7 +23,7 @@ export const LEVEL_INFO: LevelInfo[] = [
   },
   {
     level: 2,
-    name: '꾸부정 거북기',
+    name: '꾸부정 거부기',
     tilt: '약 40–45°',
     weight: '약 20–22 kg',
     character: stepTwoCharacter,
