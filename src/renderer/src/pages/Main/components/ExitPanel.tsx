@@ -73,24 +73,6 @@ const ExitPanel = () => {
     [score, colors.score],
   );
 
-  // 바깥쪽 링 배경 데이터 (회색) - 전체를 회색으로 채움
-  const BackgroundData = useMemo(
-    () => [{ name: '배경', value: 100, color: colors.background }],
-    [colors.background],
-  );
-
-  // 바깥쪽 링 프로그레스 데이터 (녹색) - 바른 자세 비율만큼 녹색
-  const TimeProgressData = useMemo(
-    () => [
-      {
-        name: '바른 자세 시간',
-        value: correctPosturePercentage,
-        color: colors.time,
-      },
-    ],
-    [correctPosturePercentage, colors.time],
-  );
-
   const formatTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -182,7 +164,7 @@ const ExitPanel = () => {
                 innerRadius={77.75}
                 outerRadius={92}
                 startAngle={450}
-                endAngle={450 - (75 / 100) * 360}
+                endAngle={450 - (72 / 100) * 360}
                 dataKey="value"
                 stroke="none"
                 paddingAngle={0}
@@ -214,18 +196,7 @@ const ExitPanel = () => {
                 바른 자세 시간
               </span>
               <span className="text-headline-2xl-semibold text-grey-600">
-                {75}%
-              </span>
-            </p>
-          </div>
-
-          <div className="bg-grey-25 flex flex-col rounded-[24px] p-5">
-            <p className="flex flex-col gap-2 px-5">
-              <span className="text-body-sm-medium text-grey-400">
-                바른 자세 점수
-              </span>
-              <span className="text-body-xl-semibold text-grey-600">
-                {score}점
+                {72}%
               </span>
             </p>
           </div>
