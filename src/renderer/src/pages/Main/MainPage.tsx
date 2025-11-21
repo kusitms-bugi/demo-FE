@@ -117,9 +117,11 @@ const MainPage = () => {
 
     if (timeSinceLastSave >= 1000) {
       // 1초(1000ms) 이상 지났으면 저장
+      // KST(UTC+9) 시간으로 변환
+      const kstTime = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString();
       metricsRef.current.push({
         score: result.cls, // 자세 상태별 레벨 (1~6) 저장
-        timestamp: new Date().toISOString(),
+        timestamp: kstTime,
       });
       lastSaveTimeRef.current = currentTime;
     }

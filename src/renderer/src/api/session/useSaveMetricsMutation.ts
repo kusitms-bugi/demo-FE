@@ -15,7 +15,7 @@ const saveMetrics = async (
   const { sessionId, metrics } = data;
   const response = await api.post<SaveMetricsResponse>(
     `/sessions/${sessionId}/metrics`,
-    { sessionId, metrics },
+    metrics, // API 스펙에 따라 배열만 전송
   );
   const result = response.data;
 
