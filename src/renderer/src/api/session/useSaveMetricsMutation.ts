@@ -15,7 +15,7 @@ const saveMetrics = async (
   const { sessionId, metrics } = data;
   const response = await api.post<SaveMetricsResponse>(
     `/sessions/${sessionId}/metrics`,
-    { sessionId, metrics },
+    metrics, // API 스펙에 따라 배열만 전송
   );
   const result = response.data;
 
@@ -34,8 +34,8 @@ const saveMetrics = async (
  * saveMetrics({
  *   sessionId,
  *   metrics: [
- *     { score: 0.85, timestamp: new Date().toISOString() },
- *     { score: 0.92, timestamp: new Date().toISOString() }
+ *     { score: 3, timestamp: new Date().toISOString() }, // score: 자세 상태별 레벨 (1~6)
+ *     { score: 4, timestamp: new Date().toISOString() }
  *   ]
  * });
  */
