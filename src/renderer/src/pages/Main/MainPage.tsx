@@ -23,18 +23,22 @@ import { ModalPortal } from '@ui/Modal/ModalPortal';
 import AverageGraphPannel from './components/AverageGraph/AverageGraphPannel';
 import { useModal } from '../../hooks/useModal';
 import { useNotificationScheduler } from '../../hooks/useNotificationScheduler';
+import { useSessionCleanup } from '../../hooks/useSessionCleanup';
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
 
 const MainPage = () => {
   const setStatus = usePostureStore((state) => state.setStatus);
-  const { cameraState, setHide, setShow } = useCameraStore();
+  const { cameraState, setHide, setShow, setExit } = useCameraStore();
 
   // 메트릭 저장 mutation
   const { mutate: saveMetrics } = useSaveMetricsMutation();
 
   // 메트릭 데이터를 저장할 ref (리렌더링 방지)
   const metricsRef = useRef<MetricData[]>([]);
+
+  /* 창 닫기 시 세션 정리 (메트릭 전송, 세션 종료, 카메라 종료, 위젯 닫기) */
+  useSessionCleanup(metricsRef, setExit);
 
   // 마지막 저장 시간을 추적 (1초마다 저장용)
   const lastSaveTimeRef = useRef<number>(0);
