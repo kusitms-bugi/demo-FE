@@ -28,7 +28,7 @@ const config = {
   /* 알림에 추가한 이미지 빌드 시 */
   extraResources: [
     {
-      from: 'src/main/assets/Symbol Logo.png',
+      from: 'src/main/assets/Symbol_Logo.png',
       to: 'Symbol Logo.png',
     },
   ],
