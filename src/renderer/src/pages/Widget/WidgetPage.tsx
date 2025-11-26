@@ -9,7 +9,6 @@ import { usePostureSyncWithLocalStorage } from './hooks/usePostureSyncWithLocalS
 import { useThemeSync } from './hooks/useThemeSync';
 
 type WidgetSize = 'mini' | 'medium';
-type PostureState = 'turtle' | 'giraffe';
 
 /* 레이아웃 전환 기준점 */
 const BREAKPOINT = {

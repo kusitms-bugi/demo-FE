@@ -64,10 +64,10 @@ export function MediumWidgetContent({ posture }: MediumWidgetContentProps) {
   }
 
   return (
-    <div className="flex h-full w-full flex-col transition-colors duration-500 ease-in-out">
+    <div className="flex h-full w-full flex-col pb-[10px] transition-colors duration-500 ease-in-out">
       {/* 캐릭터 영역 */}
       <div
-        className="mini:h-auto mini: mb-[3px] flex aspect-[1/1] h-full w-full flex-1 rounded-lg transition-all duration-500 ease-in-out"
+        className="mini:h-auto mini: mb-[5px] flex aspect-[1/1] h-full w-full flex-1 rounded-lg transition-all duration-500 ease-in-out"
         style={{ background: gradient }}
       >
         {isGiraffe ? (
