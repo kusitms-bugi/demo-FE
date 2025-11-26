@@ -74,7 +74,7 @@ export function WidgetPage() {
   const isMini = widgetSize === 'mini';
 
   return (
-    <div className="bg-grey-0 h-screen w-screen overflow-hidden rounded-lg px-1 py-[5px]">
+    <div className="bg-grey-0 h-screen w-screen overflow-hidden rounded-lg px-[4px] py-[3px]">
       <div className={isMini ? 'flex h-full w-full' : 'h-full w-full'}>
         {/* 커스텀 타이틀바 */}
         <WidgetTitleBar isMini={isMini} />
