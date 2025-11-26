@@ -6,12 +6,12 @@ import RiniVideo from '@assets/video/rini.webm';
 import StoneBugiVideo from '@assets/video/stone-bugi.webm';
 import TireBugiVideo from '@assets/video/tire-bugi.webm';
 
-import AngelRiniRestSvg from '@assets/video/angel-rini-rest.svg?react';
-import BugiRestSvg from '@assets/video/bugi-rest.svg?react';
-import PmRiniRestSvg from '@assets/video/pm-rini-rest.svg?react';
-import RiniSvg from '@assets/video/rini.svg?react';
-import StoneBugiRestSvg from '@assets/video/stone-bugi-rest.svg?react';
-import TireBugiRestSvg from '@assets/video/tire-bugi-rest.svg?react';
+import AngelRiniRestSvg from '@assets/video/angel-rini-rest.svg';
+import BugiRestSvg from '@assets/video/bugi-rest.svg';
+import PmRiniRestSvg from '@assets/video/pm-rini-rest.svg';
+import RiniSvg from '@assets/video/rini.svg';
+import StoneBugiRestSvg from '@assets/video/stone-bugi-rest.svg';
+import TireBugiRestSvg from '@assets/video/tire-bugi-rest.svg';
 
 import { useEffect, useMemo, useRef } from 'react';
 import { useCameraStore } from '../../../store/useCameraStore';
@@ -49,7 +49,7 @@ const RunningPanel = () => {
   }, [levelInfo.level]);
 
   // 레벨에 따른 SVG 선택 (카메라 hide 상태일 때 사용)
-  const LevelSvg = useMemo(() => {
+  const levelSvgSrc = useMemo(() => {
     switch (levelInfo.level) {
       case 1:
         return AngelRiniRestSvg;
@@ -187,7 +187,11 @@ const RunningPanel = () => {
               className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
             />
           ) : (
-            <LevelSvg className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain" />
+            <img
+              src={levelSvgSrc}
+              alt="레벨 이미지"
+              className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
+            />
           )}
         </div>
       </div>
