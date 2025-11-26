@@ -29,7 +29,7 @@ const config = {
   extraResources: [
     {
       from: 'src/main/assets/Symbol_Logo.png',
-      to: 'Symbol Logo.png',
+      to: 'Symbol_Logo.png',
     },
   ],
   asar: true,
