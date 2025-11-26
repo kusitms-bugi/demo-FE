@@ -6,13 +6,24 @@ import RiniVideo from '@assets/video/rini.webm';
 import StoneBugiVideo from '@assets/video/stone-bugi.webm';
 import TireBugiVideo from '@assets/video/tire-bugi.webm';
 
-import { useEffect, useMemo } from 'react';
+import AngelRiniRestSvg from '@assets/video/angel-rini-rest.svg?react';
+import BugiRestSvg from '@assets/video/bugi-rest.svg?react';
+import PmRiniRestSvg from '@assets/video/pm-rini-rest.svg?react';
+import RiniSvg from '@assets/video/rini.svg?react';
+import StoneBugiRestSvg from '@assets/video/stone-bugi-rest.svg?react';
+import TireBugiRestSvg from '@assets/video/tire-bugi-rest.svg?react';
+
+import { useEffect, useMemo, useRef } from 'react';
+import { useCameraStore } from '../../../store/useCameraStore';
 import { usePostureStore } from '../../../store/usePostureStore';
 import { cn } from '../../../utils/cn';
 import { getScoreLevel } from '../../../utils/getScoreLevel';
 
 const RunningPanel = () => {
   const score = usePostureStore((state) => state.score);
+  const cameraState = useCameraStore((state) => state.cameraState);
+  const isCameraShow = cameraState === 'show';
+  const backgroundVideoRef = useRef<HTMLVideoElement>(null);
 
   // 점수 기반 레벨 계산
   const levelInfo = useMemo(() => getScoreLevel(score), [score]);
@@ -34,6 +45,26 @@ const RunningPanel = () => {
         return TireBugiVideo;
       default:
         return RiniVideo;
+    }
+  }, [levelInfo.level]);
+
+  // 레벨에 따른 SVG 선택 (카메라 hide 상태일 때 사용)
+  const LevelSvg = useMemo(() => {
+    switch (levelInfo.level) {
+      case 1:
+        return AngelRiniRestSvg;
+      case 2:
+        return PmRiniRestSvg;
+      case 3:
+        return RiniSvg;
+      case 4:
+        return BugiRestSvg;
+      case 5:
+        return StoneBugiRestSvg;
+      case 6:
+        return TireBugiRestSvg;
+      default:
+        return RiniSvg;
     }
   }, [levelInfo.level]);
 
@@ -74,6 +105,20 @@ const RunningPanel = () => {
     return statusMap[levelInfo.level] || '가는 중';
   }, [levelInfo.level]);
 
+  // 카메라 상태에 따라 배경 영상 재생/멈춤 제어
+  useEffect(() => {
+    const video = backgroundVideoRef.current;
+    if (!video) return;
+
+    if (isCameraShow) {
+      video.play().catch((error) => {
+        console.warn('배경 영상 재생 실패:', error);
+      });
+    } else {
+      video.pause();
+    }
+  }, [isCameraShow]);
+
   // 위젯 창 상태 확인
   useEffect(() => {
     const checkWidgetStatus = async () => {
@@ -100,6 +145,7 @@ const RunningPanel = () => {
       <div className="relative h-[421px] w-full overflow-hidden rounded-xl">
         {/* 배경 영상 */}
         <video
+          ref={backgroundVideoRef}
           src={BackgroundVideo}
           autoPlay
           loop
@@ -131,14 +177,18 @@ const RunningPanel = () => {
             'relative z-10 mt-12 flex items-center justify-center px-4',
           )}
         >
-          <video
-            src={levelVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
-          />
+          {isCameraShow ? (
+            <video
+              src={levelVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
+            />
+          ) : (
+            <LevelSvg className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain" />
+          )}
         </div>
       </div>
     </div>
