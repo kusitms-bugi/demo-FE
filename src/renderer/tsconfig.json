@@ -20,18 +20,23 @@
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@ui/*": ["./src/components/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@api/*": ["./src/api/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@ui/*": ["./components/*"],
+      "@assets/*": ["./assets/*"],
+      "@api/*": ["./api/*"],
+      "@utils/*": ["./utils/*"],
+      "@shared/*": ["./shared/*"],
+      "@entities/*": ["./entities/*"],
+      "@features/*": ["./features/*"],
+      "@widgets/*": ["./widgets/*"]
     }
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "../preload/exposedInMainWorld.d.ts",
+    "src/shared/types/*.d.ts",
     "src/types/*.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
