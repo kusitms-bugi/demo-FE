@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { AttendanceQueryParams, AttendanceResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 출석 현황 조회 API
@@ -9,25 +9,7 @@ import { AttendanceQueryParams, AttendanceResponse } from '../types';
 const getAttendance = async (
   params: AttendanceQueryParams,
 ): Promise<AttendanceResponse> => {
-  const queryParams = new URLSearchParams({
-    period: params.period,
-    year: params.year.toString(),
-  });
-
-  if (params.month !== undefined) {
-    queryParams.append('month', params.month.toString());
-  }
-
-  const response = await api.get<AttendanceResponse>(
-    `/dashboard/attendance?${queryParams.toString()}`,
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '출석 현황 조회 실패');
-  }
-
-  return result;
+  return mockBackend.attendance(params);
 };
 
 /**

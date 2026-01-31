@@ -1,22 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { PostureGraphResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 바른 자세 점수 그래프 조회 API (최근 31일)
  * GET /dashboard/posture-graph
  */
 const getPostureGraph = async (): Promise<PostureGraphResponse> => {
-  const response = await api.get<PostureGraphResponse>(
-    '/dashboard/posture-graph',
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '자세 그래프 조회 실패');
-  }
-
-  return result;
+  return mockBackend.postureGraph();
 };
 
 /**

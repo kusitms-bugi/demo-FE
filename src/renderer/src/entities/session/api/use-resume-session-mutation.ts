@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import api from '@shared/api';
 import { SessionActionResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 세션 재개 API
@@ -8,16 +8,7 @@ import { SessionActionResponse } from '../types';
 const resumeSession = async (
   sessionId: string,
 ): Promise<SessionActionResponse> => {
-  const response = await api.patch<SessionActionResponse>(
-    `/sessions/${sessionId}/resume`,
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '세션 재개 실패');
-  }
-
-  return result;
+  return mockBackend.resumeSession(sessionId);
 };
 
 /**

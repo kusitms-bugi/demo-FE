@@ -16,8 +16,6 @@ export default [
       '**/*.config.js',
       '**/*.config.mjs',
       '**/*.config.ts',
-      '.electron-builder.config.js',
-      'scripts/**',
       '**/*.d.ts',
     ],
   },

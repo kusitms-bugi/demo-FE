@@ -1,22 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { AverageScoreResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 평균 자세 점수 조회 API
  * GET /dashboard/average-score
  */
 const getAverageScore = async (): Promise<AverageScoreResponse> => {
-  const response = await api.get<AverageScoreResponse>(
-    '/dashboard/average-score',
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '평균 점수 조회 실패');
-  }
-
-  return result;
+  return mockBackend.averageScore();
 };
 
 /**

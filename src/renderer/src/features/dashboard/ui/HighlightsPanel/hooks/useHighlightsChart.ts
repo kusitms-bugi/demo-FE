@@ -92,18 +92,33 @@ export function useHighlightsChart(activePeriod: HighlightPeriod): ChartConfig {
   // CSS 변수에서 색상 가져오기 (다크모드 변경 시 재계산)
   const chartColors = useMemo<ChartColors>(
     () => ({
-      previous: getColor('--color-grey-100', '#e3e1df'), // 저번 주/달 바 색
+      previous: getColor(
+        '--color-grey-100',
+        isDarkApplied ? '#2d2c2a' : '#e3e1df',
+      ), // 저번 주/달 바 색
       current: getColor('--color-sementic-brand-primary', '#ffbf00'), // 이번 주/달 바 색
     }),
     [isDarkApplied],
   );
 
   const chartConfig = useMemo<ChartConfig>(() => {
-    const gridColorValue = getColor('--color-grey-50', '#efeeed');
-    const yAxisTickColorValue = getColor('--color-grey-300', '#a8a7a4');
+    const gridColorValue = getColor(
+      '--color-grey-50',
+      isDarkApplied ? '#2d2c2a' : '#efeeed',
+    );
+    const yAxisTickColorValue = getColor(
+      '--color-grey-300',
+      isDarkApplied ? '#a8a7a4' : '#a8a7a4',
+    );
 
-    const currentLabelColor = getColor('--color-yellow-50', '#fff9e6'); // 이번 주/달 라벨
-    const prevLabelColor = getColor('--color-grey-0', '#ffffff'); // 저번 주/달 라벨
+    const currentLabelColor = getColor(
+      '--color-yellow-50',
+      isDarkApplied ? '#fff9e6' : '#fff9e6',
+    ); // 이번 주/달 라벨
+    const prevLabelColor = getColor(
+      '--color-grey-0',
+      isDarkApplied ? '#ffffff' : '#ffffff',
+    ); // 저번 주/달 라벨
 
     // 공통 스타일
     const baseConfig = {

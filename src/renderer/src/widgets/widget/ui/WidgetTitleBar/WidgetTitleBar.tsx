@@ -45,7 +45,6 @@ export function WidgetTitleBar({
       } `}
       style={{
         // 드래그 가능하게 설정 (Electron에서 창 이동 가능)
-        // @ts-expect-error: electronAPI 타입 정의 없음
         WebkitAppRegion: 'drag',
       }}
     >
@@ -55,7 +54,6 @@ export function WidgetTitleBar({
         className="mini:mt-[2px] h-[10px] w-[10px] rounded-full bg-[#FF5154] hover:bg-red-600"
         style={{
           // 버튼은 클릭 가능하도록 드래그 비활성화
-          // @ts-expect-error: electronAPI 타입 정의 없음
           WebkitAppRegion: 'no-drag',
         }}
         aria-label="닫기"

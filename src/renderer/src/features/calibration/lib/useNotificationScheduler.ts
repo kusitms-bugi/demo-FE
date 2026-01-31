@@ -7,6 +7,18 @@ export const useNotificationScheduler = () => {
   const { isAllow, stretching, turtleNeck } = useNotificationStore();
   const postureClass = usePostureStore((state) => state.postureClass);
 
+  const notify = useCallback(async (title: string, body: string) => {
+    if (window.electronAPI) {
+      await window.electronAPI.notification.show(title, body);
+      return;
+    }
+
+    if (typeof Notification === 'undefined') return;
+    if (Notification.permission === 'granted') {
+      new Notification(title, { body });
+    }
+  }, []);
+
   /* 타이머 저장 변수 */
   const stretchingTimerRef = useRef<ReturnType<typeof setInterval> | null>(
     null,
@@ -20,26 +32,26 @@ export const useNotificationScheduler = () => {
   /* 스트레칭 알림 표시 */
   const showStretchingNotification = useCallback(async () => {
     try {
-      await window.electronAPI.notification.show(
+      await notify(
         '스트레칭 시간이에요! 🧘',
         `${stretching.interval}분이 지났어요. 잠시 스트레칭을 해보는 건 어떨까요?`,
       );
     } catch (error) {
       console.error('Failed to show stretching notification:', error);
     }
-  }, [stretching.interval]);
+  }, [notify, stretching.interval]);
 
   /* 거북목 알림 표시 */
   const showTurtleNeckNotification = useCallback(async () => {
     try {
-      await window.electronAPI.notification.show(
+      await notify(
         '자세를 확인해주세요! 🐢',
         `${turtleNeck.interval}분 동안 거북목 자세가 감지되었어요. 자세를 바로잡아주세요.`,
       );
     } catch (error) {
       console.error('Failed to show turtle neck notification:', error);
     }
-  }, [turtleNeck.interval]);
+  }, [notify, turtleNeck.interval]);
 
   /* 스트레칭 타이머 설정 */
   useEffect(() => {

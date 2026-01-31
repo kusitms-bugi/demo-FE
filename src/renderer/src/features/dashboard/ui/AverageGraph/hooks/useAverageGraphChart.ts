@@ -25,8 +25,14 @@ export function useAverageGraphChart(activePeriod: AverageGraphPeriod) {
 
   /* 그래프 색상 */
   const chartConfig = useMemo<ChartConfig>(() => {
-    const gridColorValue = getColor('--color-grey-50', '#efeeed');
-    const fillColorValue = getColor('--color-yellow-200', '#ffe28a');
+    const gridColorValue = getColor(
+      '--color-grey-50',
+      isDarkApplied ? '#2d2c2a' : '#efeeed',
+    );
+    const fillColorValue = getColor(
+      '--color-yellow-200',
+      isDarkApplied ? '#8a6a00' : '#ffe28a',
+    );
     const strokeColorValue = getColor(
       '--color-sementic-brand-primary',
       '#ffbf00',

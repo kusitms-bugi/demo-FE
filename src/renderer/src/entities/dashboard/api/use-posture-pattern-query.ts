@@ -1,22 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { PosturePatternResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 자세 패턴 분석 조회 API
  * GET /dashboard/posture-pattern
  */
 const getPosturePattern = async (): Promise<PosturePatternResponse> => {
-  const response = await api.get<PosturePatternResponse>(
-    '/dashboard/posture-pattern',
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '자세 패턴 분석 조회 실패');
-  }
-
-  return result;
+  return mockBackend.posturePattern();
 };
 
 /**

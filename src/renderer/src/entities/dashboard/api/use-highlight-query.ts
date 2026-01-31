@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { HighlightQueryParams, HighlightResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 하이라이트 조회 API
@@ -9,25 +9,7 @@ import { HighlightQueryParams, HighlightResponse } from '../types';
 const getHighlight = async (
   params: HighlightQueryParams,
 ): Promise<HighlightResponse> => {
-  const queryParams = new URLSearchParams({
-    period: params.period,
-    year: params.year.toString(),
-  });
-
-  if (params.month !== undefined) {
-    queryParams.append('month', params.month.toString());
-  }
-
-  const response = await api.get<HighlightResponse>(
-    `/dashboard/highlight?${queryParams.toString()}`,
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '하이라이트 조회 실패');
-  }
-
-  return result;
+  return mockBackend.highlight(params);
 };
 
 /**

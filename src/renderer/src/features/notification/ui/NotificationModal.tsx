@@ -50,7 +50,11 @@ const NotificationModal = ({ onClose }: NotificationModalProps) => {
     /* 알림 권한 요청 (처음 활성화하는 경우) */
     if (isAllow) {
       try {
-        await window.electronAPI.notification.requestPermission();
+        if (window.electronAPI) {
+          await window.electronAPI.notification.requestPermission();
+        } else if (typeof Notification !== 'undefined') {
+          await Notification.requestPermission();
+        }
       } catch (error) {
         console.error('Failed to request notification permission:', error);
       }

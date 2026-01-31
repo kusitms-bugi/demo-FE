@@ -1,6 +1,6 @@
 # GBGR (거부기린)
 
-> 실시간 웹캠 자세 인식을 통해 거북목과 같은 잘못된 자세를 교정하고 사용자에게 통계 피드백을 제공하는 데스크탑 애플리케이션
+> 실시간 웹캠 자세 인식을 통해 거북목과 같은 잘못된 자세를 교정하고 사용자에게 통계 피드백을 제공하는 웹 데모
 
 <p align="center">
   <img src="bg.png" alt="거부기린 아이콘"  />
@@ -22,10 +22,9 @@
   - 잘못된 자세가 감지되면 알림을 보내 즉각적인 교정을 유도합니다.
   - 세션별 자세 데이터를 기록하고 통계 대시보드를 제공하여 장기적인 습관 개선을 돕습니다.
 - **프론트엔드 기술 포인트**:
-  - `@mediapipe/tasks-vision`을 활용하여 웹캠 영상에서 실시간으로 신체 키포인트를 추출하고 자세를 분석합니다.
-  - `Zustand`를 사용해 세션, 알림, 카메라 등 복잡한 클라이언트 상태를 효율적으로 관리합니다.
-  - `Recharts`를 이용해 사용자의 자세 점수, 패턴 등 통계 데이터를 시각화하여 제공합니다.
-  - `Electron`의 IPC 통신을 활용하여 메인 윈도우와 위젯 간의 상태를 동기화합니다.
+- `@mediapipe/tasks-vision`을 활용하여 웹캠 영상에서 실시간으로 신체 키포인트를 추출하고 자세를 분석합니다.
+- `Zustand`를 사용해 세션, 알림, 카메라 등 복잡한 클라이언트 상태를 효율적으로 관리합니다.
+- `Recharts`를 이용해 사용자의 자세 점수, 패턴 등 통계 데이터를 시각화하여 제공합니다.
 
 ---
 
@@ -33,7 +32,7 @@
 
 1. **실시간 자세 분석 및 위젯**
    - 설명: 웹캠을 통해 사용자의 자세를 실시간으로 분석하고, MediaPipe를 활용해 신체 키포인트를 추출합니다. 메인 화면과 데스크탑 위젯을 통해 현재 자세 상태(거북목/기린)를 실시간으로 확인하고 세션을 제어할 수 있습니다. 위젯은 항상 위에 표시되며 크기 조절이 가능합니다.
-   - 기술 포인트: `react-webcam`, `@mediapipe/tasks-vision`, Electron `BrowserWindow`, `PostureClassifier`
+   - 기술 포인트: `react-webcam`, `@mediapipe/tasks-vision`, `PostureClassifier`
    - 주요 특징:
      - PI(Posture Index) 계산을 통한 정량적 자세 평가
      - EMA(Exponential Moving Average) 스무딩으로 노이즈 제거
@@ -58,7 +57,7 @@
 
 4. **자세 교정 알림**
    - 설명: 거북목이나 비대칭 자세가 일정 시간 이상 지속되면 데스크탑 알림을 보내 사용자가 인지하고 바로잡을 수 있도록 돕습니다. 알림 강도와 주기를 사용자가 설정할 수 있습니다.
-   - 기술 포인트: Electron `Notification` API, `useNotificationScheduler` 훅, `Zustand` (알림 상태 관리)
+   - 기술 포인트: Web `Notification` API, `useNotificationScheduler` 훅, `Zustand` (알림 상태 관리)
 
 5. **세션 관리**
    - 설명: 자세 측정 세션을 시작, 일시정지, 재개, 종료할 수 있습니다. 세션 중 수집된 메트릭 데이터는 주기적으로 서버에 저장되며, 세션 종료 시 리포트를 제공합니다.
@@ -70,7 +69,7 @@
 
 ### Frontend
 
-- **Framework**: `Electron`, `React`
+- **Framework**: `React`
 - **Language**: `TypeScript`
 - **State Management**: `Zustand`, `TanStack Query`
 - **Styling**: `Tailwind CSS`
@@ -90,27 +89,10 @@
 
 ## 📁 프로젝트 구조
 
-Electron 프로젝트는 일반적으로 **Main Process**, **Preload Scripts**, **Renderer Process** 세 가지 프로세스로 구성됩니다. 이 프로젝트는 Vite를 사용하여 각 프로세스를 독립적으로 빌드하고, TypeScript와 React를 활용한 구조로 설계되었습니다.
-
-**참고 보일러플레이트**:
-
-- [electron-vite-react](https://github.com/electron-vite/electron-vite-react) - Electron Vite React 템플릿
-- [electron-vite](https://github.com/alex8088/electron-vite) - Vite 기반 Electron 보일러플레이트
-- [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) - Webpack 기반 Electron + React 보일러플레이트
-- [vite-electron-builder](https://github.com/cawa-93/vite-electron-builder) - Vite + Electron Builder 보일러플레이트
-
+Vite + React 기반 단일 웹 앱이며, 실제 엔트리(루트)는 `src/` 입니다.
 
 ```bash
 src/
-├── main/           # Electron 메인 프로세스
-│   └── src/
-│       ├── index.ts              # IPC 핸들러 및 앱 초기화
-│       ├── mainWindow.ts        # 메인 윈도우 생성 및 관리
-│       ├── widgetWindow.ts      # 위젯 윈도우 생성 및 관리
-│       └── notificationHandlers.ts  # 알림 관련 핸들러
-├── preload/        # Electron 프리로드 스크립트
-│   └── src/
-│       └── index.ts             # Context Bridge API 노출
 └── renderer/       # React 애플리케이션 (UI)
     └── src/
         ├── api/                  # API 요청 관련 훅 (TanStack Query)
@@ -162,19 +144,14 @@ src/
 # 1. 의존성 설치
 pnpm install
 
-# 2. 개발 서버 실행 (메인 + 렌더러 동시 실행)
+# 2. 개발 서버 실행
 pnpm dev
 
-# 3. 프로덕션 빌드
+# 3. 빌드
 pnpm build
 
-# 4. 프로덕션 모드로 실행
-pnpm start:prod
-
-# 5. 플랫폼별 빌드
-pnpm build:mac    # macOS 빌드
-pnpm build:win    # Windows 빌드
-pnpm build:all    # 모든 플랫폼 빌드
+# 4. 로컬 프리뷰
+pnpm preview
 ```
 
 ---
@@ -183,8 +160,8 @@ pnpm build:all    # 모든 플랫폼 빌드
 
 - **기술적 도전 과제**:
   1.  **실시간 영상 처리 성능**: 저사양 컴퓨터에서도 부드럽게 작동하도록 웹캠 영상 분석 과정의 성능을 최적화하는 것이 중요했습니다.
-  2.  **다중 윈도우 상태 관리**: Electron의 메인 윈도우와 위젯 윈도우 간의 상태(세션, 시간 등)를 일관성 있게 동기화하는 것이 복잡했습니다. 특히 메인 창과 위젯이 각각 독립적으로 판정을 수행하면 상태가 달라질 수 있는 문제가 있었습니다.
-  3.  **크로스 플랫폼 호환성**: macOS와 Windows 환경 모두에서 안정적으로 빌드되고 실행되도록 `electron-builder` 설정을 구성했습니다.
+  2.  **메인/위젯 모드 동기화**: 서로 다른 UI 컨텍스트에서 상태(세션, 시간 등)를 일관성 있게 동기화하는 것이 복잡했습니다.
+  3.  **웹 배포/호환성**: 다양한 브라우저 환경에서 안정적으로 실행되도록 빌드/번들링 설정과 런타임 의존성을 관리했습니다.
 
 - **해결 과정**:
   1.  **성능 최적화**:
@@ -193,15 +170,12 @@ pnpm build:all    # 모든 플랫폼 빌드
   - 히스테리시스 로직으로 채터링 방지하여 안정적인 상태 전환
   - 점수 클램핑(-10 ~ 40)으로 이상치 제거
   2.  **다중 윈도우 동기화**:
-  - 메인 프로세스를 중앙 허브로 삼아 `ipcMain`과 `ipcRenderer`를 통해 위젯 창 열기/닫기 제어
   - 위젯과 메인 윈도우 간 자세 상태 동기화는 `localStorage`의 `storage` 이벤트 활용 (IPC 대신 사용하여 간단하고 안정적으로 구현)
   - `usePostureSyncWithLocalStorage` 훅으로 위젯에서 메인 창의 상태 변경 감지
   - **스마트 판정 전략**: 메인 창이 활성화되어 있으면 위젯은 판정을 하지 않고 메인 창의 결과만 동기화받음. 메인 창이 없으면 위젯이 독립적으로 판정 수행
   - 메인 창 활성화 상태는 localStorage의 타임스탬프로 추적 (2초 이내 업데이트가 없으면 비활성화로 간주)
-  3.  **크로스 플랫폼 호환성**:
-  - GitHub Actions를 이용해 각기 다른 OS 환경의 빌드를 자동화
-  - `entitlements.mac.plist`에 카메라/마이크 권한 명시
-  - `electron-builder` 설정으로 macOS (Intel/Apple Silicon) 및 Windows 빌드 지원
+  3.  **웹 배포/호환성**:
+  - Vite 기반 번들링 및 코드 스플리팅으로 초기 로딩 최적화
 
 ---
 

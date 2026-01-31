@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '@shared/api';
 import { SessionReportResponse } from '../types';
+import { mockBackend } from '@shared/mock/backend';
 
 /**
  * 세션 리포트 조회 API
@@ -8,16 +8,7 @@ import { SessionReportResponse } from '../types';
 const fetchSessionReport = async (
   sessionId: string,
 ): Promise<SessionReportResponse> => {
-  const response = await api.get<SessionReportResponse>(
-    `/sessions/${sessionId}/report`,
-  );
-  const result = response.data;
-
-  if (!result.success) {
-    throw new Error(result.message || '세션 리포트 조회 실패');
-  }
-
-  return result;
+  return mockBackend.sessionReport(sessionId);
 };
 
 /**

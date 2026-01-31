@@ -40,6 +40,15 @@ const NotificationModal = lazy(
 );
 
 const LOCAL_STORAGE_KEY = 'calibration_result_v1';
+const DEFAULT_CALIBRATION = {
+  mu_PI: 0.4474741177611909,
+  sigma_PI: 0.004074726193094193,
+  nPass: 48,
+  nTotal: 48,
+  passRate: 1,
+  quality: 'good',
+  timestamp: 1769876482560,
+};
 
 const MainPage = () => {
   const setStatus = usePostureStore((state) => state.setStatus);
@@ -101,6 +110,12 @@ const MainPage = () => {
   };
 
   // 캘리브레이션 로드
+  useEffect(() => {
+    const existing = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (existing) return;
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_CALIBRATION));
+  }, []);
+
   const calib = (() => {
     try {
       const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
