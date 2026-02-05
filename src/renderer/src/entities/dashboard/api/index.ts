@@ -1,4 +1,5 @@
 export { useAttendanceQuery } from './use-attendance-query';
+export { useAttendanceSuspenseQuery } from './use-attendance-query';
 export { useAverageScoreQuery } from './use-average-score-query';
 export { useHighlightQuery } from './use-highlight-query';
 export { useLevelQuery } from './use-level-query';

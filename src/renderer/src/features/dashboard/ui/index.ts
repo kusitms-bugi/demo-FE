@@ -1,7 +1,12 @@
 // Dashboard UI components barrel export
-export { default as AttendacePanel } from './AttendacePanel';
-export { default as AverageGraphPannel } from './AverageGraph/AverageGraphPannel';
-export { default as AveragePosturePanel } from './AveragePosture/AveragePosturePanel';
+export { default as AttendancePanel } from './AttendancePanel';
+// Backward-compatible alias (typo)
+export { default as AttendacePanel } from './AttendancePanel';
+
+export { default as AverageGraphPanel } from './AverageGraph';
+// Backward-compatible alias (typo)
+export { default as AverageGraphPannel } from './AverageGraph';
+export { default as AveragePosturePanel } from './AveragePosture';
 export { default as CharacterPanel } from './CharacterPanel';
 export { default as CharacterSpeedRow } from './CharacterSpeedRow';
 export { default as ExitPanel } from './ExitPanel';

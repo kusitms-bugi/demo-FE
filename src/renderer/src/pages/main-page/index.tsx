@@ -10,7 +10,7 @@ import type { MetricData } from '@entities/session';
 import { useSaveMetricsMutation } from '@entities/session';
 import { useNotificationScheduler } from '@features/calibration';
 import {
-  AttendacePanel,
+  AttendancePanel,
   AveragePosturePanel,
   MainHeader,
   MiniRunningPanel,
@@ -27,9 +27,7 @@ import { useCameraStore } from '@widgets/camera';
 import { lazy, Suspense, useEffect, useRef } from 'react';
 
 // Recharts를 사용하는 컴포넌트들을 lazy import
-const AverageGraphPannel = lazy(
-  () => import('@features/dashboard/ui/AverageGraph/AverageGraphPannel'),
-);
+const AverageGraphPanel = lazy(() => import('@features/dashboard/ui/AverageGraph'));
 const HighlightsPanel = lazy(
   () => import('@features/dashboard/ui/HighlightsPanel'),
 );
@@ -211,69 +209,77 @@ const MainPage = () => {
         <div className="grid min-h-0 w-full flex-1 grid-cols-[1fr_minmax(336px,400px)] items-stretch gap-2">
           {/* 좌측 영역 */}
           <div className="h-full min-h-0 w-full">
-            <div className="flex h-full min-h-0 flex-col gap-[clamp(8px,calc(4.375vw-48px),36px)]">
-              <MainHeader onClickNotification={handleOpenModal} />
-              <div className="flex min-h-0 flex-1 flex-col">
-                <div className="text-caption-xs-regular text-grey-200 mr-4 flex shrink-0 items-end justify-end">
-                  마지막 갱신일: 2025.10.22(수) 17:52
+            <Suspense
+              fallback={
+                <div className="flex h-full w-full items-center justify-center rounded-3xl bg-grey-25">
+                  <LoadingSpinner size="lg" text="로딩 중..." />
                 </div>
+              }
+            >
+              <div className="flex h-full min-h-0 flex-col gap-[clamp(8px,calc(4.375vw-48px),36px)]">
+                <MainHeader onClickNotification={handleOpenModal} />
+                <div className="flex min-h-0 flex-1 flex-col">
+                  <div className="text-caption-xs-regular text-grey-200 mr-4 flex shrink-0 items-end justify-end">
+                    마지막 갱신일: 2025.10.22(수) 17:52
+                  </div>
 
-                {/* 스크롤 영역 래퍼 */}
-                <div className="min-h-0 flex-1 overflow-hidden">
-                  <div className="custom-scrollbar flex h-full min-h-full w-full flex-col overflow-y-auto overscroll-y-contain pr-4">
-                    {/* 상단 부분 */}
-                    <div className="mb-4 grid h-[268px] shrink-0 grid-cols-[1fr_2fr] gap-4">
-                      {/* 평균 자세 점수 부분 */}
-                      <AveragePosturePanel />
-                      <div className="bg-grey-0 rounded-3xl">
-                        <AttendacePanel />
-                      </div>
-                    </div>
-
-                    {/* 하단 부분 */}
-                    <div className="flex min-h-max flex-1 items-stretch gap-4">
-                      <div className="@container flex min-h-0 w-full min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
-                        {/*레벨 및 이동거리 section */}
-                        <div className="bg-grey-0 relative h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
-                          <TotalDistancePanel />
-                        </div>
-
-                        {/* 시계열 그래프 */}
-                        <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-4 @[562px]:grid-cols-2">
-                          <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
-                            <Suspense
-                              fallback={
-                                <div className="flex h-full items-center justify-center">
-                                  <LoadingSpinner size="md" />
-                                </div>
-                              }
-                            >
-                              <AverageGraphPannel />
-                            </Suspense>
-                          </div>
-
-                          {/*하이라이트 */}
-                          <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
-                            <Suspense
-                              fallback={
-                                <div className="flex h-full items-center justify-center">
-                                  <LoadingSpinner size="md" />
-                                </div>
-                              }
-                            >
-                              <HighlightsPanel />
-                            </Suspense>
-                          </div>
+                  {/* 스크롤 영역 래퍼 */}
+                  <div className="min-h-0 flex-1 overflow-hidden">
+                    <div className="custom-scrollbar flex h-full min-h-full w-full flex-col overflow-y-auto overscroll-y-contain pr-4">
+                      {/* 상단 부분 */}
+                      <div className="mb-4 grid h-[268px] shrink-0 grid-cols-[1fr_2fr] gap-4">
+                        {/* 평균 자세 점수 부분 */}
+                        <AveragePosturePanel />
+                        <div className="bg-grey-0 rounded-3xl">
+                          <AttendancePanel />
                         </div>
                       </div>
-                      <div className="bg-grey-0 min-h-[300px] w-full max-w-[330px] min-w-[330px] flex-1 rounded-3xl">
-                        <PosePatternPanel />
+
+                      {/* 하단 부분 */}
+                      <div className="flex min-h-max flex-1 items-stretch gap-4">
+                        <div className="@container flex min-h-0 w-full min-w-[552px] flex-1 flex-col items-start gap-4 self-stretch">
+                          {/*레벨 및 이동거리 section */}
+                          <div className="bg-grey-0 relative h-[170px] w-full shrink-0 rounded-3xl py-5 pr-4 pl-2">
+                            <TotalDistancePanel />
+                          </div>
+
+                          {/* 시계열 그래프 */}
+                          <div className="grid min-h-0 w-full flex-1 grid-cols-1 gap-4 @[562px]:grid-cols-2">
+                            <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
+                              <Suspense
+                                fallback={
+                                  <div className="flex h-full items-center justify-center">
+                                    <LoadingSpinner size="md" />
+                                  </div>
+                                }
+                              >
+                                <AverageGraphPanel />
+                              </Suspense>
+                            </div>
+
+                            {/*하이라이트 */}
+                            <div className="bg-grey-0 h-full min-h-[224px] w-full min-w-[270px] rounded-3xl @[552px]:min-h-[210px]">
+                              <Suspense
+                                fallback={
+                                  <div className="flex h-full items-center justify-center">
+                                    <LoadingSpinner size="md" />
+                                  </div>
+                                }
+                              >
+                                <HighlightsPanel />
+                              </Suspense>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-grey-0 min-h-[300px] w-full max-w-[330px] min-w-[330px] flex-1 rounded-3xl">
+                          <PosePatternPanel />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Suspense>
           </div>
 
           {/* 우측영역 */}

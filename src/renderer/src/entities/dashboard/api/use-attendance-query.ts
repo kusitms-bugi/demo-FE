@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { AttendanceQueryParams, AttendanceResponse } from '../types';
 import { mockBackend } from '@shared/mock/backend';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { AttendanceQueryParams, AttendanceResponse } from '../types';
 
 /**
  * 출석 현황 조회 API
@@ -11,6 +11,13 @@ const getAttendance = async (
 ): Promise<AttendanceResponse> => {
   return mockBackend.attendance(params);
 };
+
+const attendanceQueryKey = (params: AttendanceQueryParams) => [
+  'attendance',
+  params.period,
+  params.year,
+  params.month,
+] as const;
 
 /**
  * 출석 현황 조회 query 훅
@@ -30,10 +37,19 @@ export const useAttendanceQuery = (
   enabled: boolean = true,
 ) => {
   return useQuery({
-    queryKey: ['attendance', params.period, params.year, params.month],
+    queryKey: attendanceQueryKey(params),
     queryFn: () => getAttendance(params),
     enabled: enabled && !!params.year,
     staleTime: 1000 * 60 * 5, // 5분간 데이터 신선하게 유지
     retry: 1, // 실패 시 1번만 재시도
+  });
+};
+
+export const useAttendanceSuspenseQuery = (params: AttendanceQueryParams) => {
+  return useSuspenseQuery({
+    queryKey: attendanceQueryKey(params),
+    queryFn: () => getAttendance(params),
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
   });
 };
