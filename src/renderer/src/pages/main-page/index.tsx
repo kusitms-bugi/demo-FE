@@ -13,12 +13,12 @@ import {
   AttendancePanel,
   AveragePosturePanel,
   MainHeader,
-  MiniRunningPanel,
   PosePatternPanel,
+  RunningPanel,
   TotalDistancePanel,
   useAutoMetricsSender,
   useSessionCleanup,
-  WebcamPanel,
+  WebcamPanel
 } from '@features/dashboard';
 import { useModal } from '@shared/hooks/use-modal';
 import { LoadingSpinner } from '@shared/ui/loading';
@@ -293,7 +293,7 @@ const MainPage = () => {
 
             <div className="bg-grey-50 h-px w-full" />
 
-            <MiniRunningPanel />
+            <RunningPanel />
           </div>
           {isOpen && (
             <ModalPortal>

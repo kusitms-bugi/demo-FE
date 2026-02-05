@@ -23,6 +23,7 @@ const RunningPanel = () => {
   const score = usePostureStore((state) => state.score);
   const cameraState = useCameraStore((state) => state.cameraState);
   const isCameraShow = cameraState === 'show';
+  const isExit = cameraState === 'exit';
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
 
   // 점수 기반 레벨 계산
@@ -114,15 +115,39 @@ const RunningPanel = () => {
       video.play().catch((error) => {
         console.warn('배경 영상 재생 실패:', error);
       });
-    } else {
-      video.pause();
+      return;
     }
-  }, [isCameraShow]);
+
+    // exit 상태일 때는 "준비중" 화면처럼 첫 프레임으로 리셋 후 정지
+    if (isExit) {
+      const resetAndPause = () => {
+        try {
+          video.currentTime = 4;
+        } catch {
+          // ignore
+        }
+        video.pause();
+      };
+
+      if (video.readyState >= 2) {
+        resetAndPause();
+      } else {
+        video.addEventListener('loadeddata', resetAndPause, { once: true });
+        video.pause();
+      }
+      return;
+    }
+
+    // hide 상태는 정지만 (프레임 유지)
+    video.pause();
+  }, [isCameraShow, isExit]);
+
+  const statusText = isExit ? '달리기 준비중..' : runningStatus;
 
   return (
     <div className="">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-caption-sm-medium text-grey-400">{runningStatus}</p>
+        <p className="text-caption-sm-medium text-grey-400">{statusText}</p>
       </div>
 
       <div className="relative h-[421px] w-full overflow-hidden rounded-xl">
@@ -130,53 +155,63 @@ const RunningPanel = () => {
         <video
           ref={backgroundVideoRef}
           src={BackgroundVideo}
-          autoPlay
-          loop
+          autoPlay={isCameraShow}
+          loop={isCameraShow}
           muted
           playsInline
+          preload="auto"
           className="absolute inset-0 h-full w-full rounded-xl object-cover"
         />
 
-        {/* 게이지바 */}
-        <div className="relative z-10 mx-4 mt-4">
-          {/* 흰색 트랙 */}
-          <div className="bg-grey-50 relative h-5 w-full rounded-full">
-            {/* 진행 바 */}
-            <div
-              className="flex h-full items-center justify-end rounded-full py-[3px] pr-[3px] transition-all duration-1000"
-              style={{
-                width: gaugeWidth,
-                background: gradient,
-              }}
-            >
-              <div className="bg-dot h-[14px] w-[14px] rounded-full opacity-50" />
-            </div>
-          </div>
-        </div>
+        {/* exit 상태일 때 배경을 흐리게(밝게) 덮기 */}
+        {isExit ? (
+          <div className="absolute inset-0 z-[5] bg-white/70 backdrop-blur-[1px]" />
+        ) : null}
 
-        {/* 움직이는 동영상 영역 */}
-        <div
-          className={cn(
-            'relative z-10 mt-12 flex items-center justify-center px-4',
-          )}
-        >
-          {isCameraShow ? (
-            <video
-              src={levelVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
-            />
-          ) : (
-            <img
-              src={levelSvgSrc}
-              alt="레벨 이미지"
-              className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
-            />
-          )}
-        </div>
+        {!isExit ? (
+          <>
+            {/* 게이지바 */}
+            <div className="relative z-10 mx-4 mt-4">
+              {/* 흰색 트랙 */}
+              <div className="bg-grey-50 relative h-5 w-full rounded-full">
+                {/* 진행 바 */}
+                <div
+                  className="flex h-full items-center justify-end rounded-full py-[3px] pr-[3px] transition-all duration-1000"
+                  style={{
+                    width: gaugeWidth,
+                    background: gradient,
+                  }}
+                >
+                  <div className="bg-dot h-[14px] w-[14px] rounded-full opacity-50" />
+                </div>
+              </div>
+            </div>
+
+            {/* 움직이는 동영상 영역 */}
+            <div
+              className={cn(
+                'relative z-10 mt-12 flex items-center justify-center px-4',
+              )}
+            >
+              {isCameraShow ? (
+                <video
+                  src={levelVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
+                />
+              ) : (
+                <img
+                  src={levelSvgSrc}
+                  alt="레벨 이미지"
+                  className="h-auto max-h-[320px] w-full rounded-lg bg-transparent object-contain"
+                />
+              )}
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );

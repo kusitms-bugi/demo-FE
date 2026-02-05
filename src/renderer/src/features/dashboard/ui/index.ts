@@ -13,10 +13,10 @@ export { default as ExitPanel } from './ExitPanel';
 export { default as HighlightsPanel } from './HighlightsPanel';
 export { default as LevelProgressPanel } from './LevelProgressPanel';
 export { default as MainHeader } from './MainHeader';
-export { default as MiniRunningPanel } from './MiniRunningPanel';
 export { default as PosePatternPanel } from './PosePatternPanel';
 export { default as RunningPanel } from './RunningPanel';
 export { default as TotalDistanceModal } from './TotalDistanceModal';
 export { default as TotalDistancePanel } from './TotalDistancePanel';
 export { default as TrendPanel } from './TrendPanel';
 export { default as WebcamPanel } from './WebcamPanel';
+

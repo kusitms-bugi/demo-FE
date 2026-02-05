@@ -28,10 +28,6 @@ const AttendancePanelPresenter = ({
   onPrevMonth,
   onNextMonth,
   attendances,
-  title,
-  content1,
-  content2,
-  subContentMessage,
 }: AttendancePanelPresenterProps) => {
   return (
     <div className="grid h-full w-full grid-cols-4 grid-rows-[57px_1fr_1fr_1fr] gap-2 p-4">
