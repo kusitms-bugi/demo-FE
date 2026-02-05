@@ -67,7 +67,19 @@ const Calendar = ({ year, month, attendances = {} }: CalendarProps) => {
   const calendarDays = buildCalendarDays(year, month);
   const { year: todayYear, month: todayMonth, day: todayDay } = getTodayParts();
 
+  const isBeforeToday = (day: number) => {
+    if (year !== todayYear) return year < todayYear;
+    if (month !== todayMonth) return month < todayMonth;
+    return day < todayDay;
+  };
+
   const getLevelForDay = (day: number): number | null => {
+    // 오늘 이전 날짜는 출석 데이터와 무관하게 "level 없는 원"으로 표시
+    if (isBeforeToday(day)) return null;
+
+    // 오늘은 고정으로 3단계 표시
+    if (year === todayYear && month === todayMonth && day === todayDay) return 3;
+
     const dateKey = formatDateKey(year, month, day);
     const usageMinutes = attendances[dateKey];
 

@@ -288,9 +288,9 @@ export const mockBackend = {
       data: {
         attendances,
         title,
-        content1: '데모 데이터입니다.',
-        content2: '실제 API 연결 전까지 임시로 표시됩니다.',
-        subContent: '거북목 탐지 로직은 로컬에서 동작합니다.',
+        content1: '바른 자세를 유지하는 것만으로도 업무 효율이 n% 올라요!',
+        content2: '거북목 자세는 목과 어깨뿐만 아니라 척추에도 무리를 줘요.',
+        subContent: '7일 이상 사용하여 거부기린이 분석한 <br/>개인화 데이터를 열람해보세요!',
       },
       code: 'OK',
       message: 'mock',
