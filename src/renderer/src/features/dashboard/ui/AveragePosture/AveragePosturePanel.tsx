@@ -1,3 +1,4 @@
+import charactersImage from '@assets/main/characters.png';
 import { useAverageScoreQuery } from '@entities/dashboard';
 import { LEVEL_INFO, getLevel } from './levelConfig';
 
@@ -11,41 +12,31 @@ const AveragePosturePanel = () => {
 
   return (
     <div
-      className={`relative h-full w-full rounded-3xl p-4 ${
-        isTurtle
-          ? 'bg-[image:var(--color-turtle-gradient)]'
-          : 'bg-[image:var(--color-average-score)]'
-      }`}
+      className={`relative h-full w-full rounded-3xl p-4 ${isTurtle
+        ? 'bg-[image:var(--color-turtle-gradient)]'
+        : 'bg-[image:var(--color-average-score)]'
+        }`}
     >
-      <div className="items center flex h-full justify-between">
-        <p className="text-caption-sm-medium flex min-w-[120px] flex-col text-yellow-100">
-          <span>평균 자세 점수</span>
-          <span className="text-title-4xl-bold text-grey-0 mb-4">
-            {isLoading ? '-' : `${score}점`}
-          </span>
-          <span className="text-caption-xs-meidum whitespace-nowrap text-yellow-50">
-            목 평균 기울기 {levelInfo.tilt}
-            <br />
-            예상 하중 {levelInfo.weight}
-          </span>
-        </p>
-        <p className="flex flex-col items-end gap-1">
+      <div className="items center flex flex-col h-full justify-between">
+        <div className='flex justify-between'>
+          <p className="text-body-xl-semibold flex min-w-[120px] flex-col text-yellow-50">
+            <span>첫 사용 후</span>
+            <span>나만의 자세 캐릭터를</span>
+            <span>진단 받아보세요</span>
+          </p>
           <span className="text-caption-xs-meidum h-[26px] rounded-full bg-yellow-50 px-2 py-1 whitespace-nowrap text-yellow-500">
-            {levelInfo.name}
-          </span>
-          <img
-            src={levelInfo.character}
-            alt={levelInfo.name}
-            className="mt-auto max-h-[208px] w-full max-w-[196px] object-contain pb-6"
-          />
-        </p>
+            거부기린
+          </span></div>
+
+        <img
+          src={charactersImage}
+          alt={levelInfo.name}
+          className="mt-auto max-h-[208px] w-full object-contain pb-6"
+        />
+
       </div>
 
-      <div className="absolute inset-x-4 bottom-4 flex flex-col">
-        <p className="text-caption-body-md-meidum text-yellow text-yellow-100">
-          Step. {level}
-        </p>
-      </div>
+
     </div>
   );
 };
