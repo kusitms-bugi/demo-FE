@@ -1,10 +1,7 @@
-import { useHighlightQuery } from '@entities/dashboard';
 import { useThemeApplied } from '@shared/hooks/use-theme-applied';
 import { getColor } from '@shared/lib/get-color';
 import { useMemo } from 'react';
-import type { HighlightDatum } from '../data';
-
-export type HighlightPeriod = 'weekly' | 'monthly';
+import { MONTHLY_DATA, type HighlightDatum } from '../data';
 
 type ChartColors = {
   previous: string;
@@ -19,6 +16,7 @@ type ChartConfig = {
   barRadius: [number, number, number, number];
   categoryGap: number;
   chartColors: ChartColors;
+  isMock: boolean;
   // 라벨 색 분리
   labelColor: string; // current(이번 주/달) 라벨 색
   previousLabelColor: string; // previous(저번 주/달) 라벨 색
@@ -33,61 +31,10 @@ type ChartConfig = {
   yAxisTicks: number[];
 };
 
-export function useHighlightsChart(activePeriod: HighlightPeriod): ChartConfig {
+export function useHighlightsChart(): ChartConfig {
   const isDarkApplied = useThemeApplied();
 
-  // 현재 날짜 기준으로 year, month 계산
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth() + 1; // getMonth()는 0-11 반환
-
-  // API 호출
-  const { data: highlightData, isLoading } = useHighlightQuery({
-    period: activePeriod === 'weekly' ? 'WEEKLY' : 'MONTHLY',
-    year: currentYear,
-    month: activePeriod === 'monthly' ? currentMonth : undefined,
-  });
-
-  // API 데이터를 차트 데이터 형식으로 변환
-  const chartData = useMemo<HighlightDatum[]>(() => {
-    const periodLabel =
-      activePeriod === 'weekly'
-        ? ['저번 주', '이번 주']
-        : ['저번 달', '이번 달'];
-
-    // 데이터가 없거나 로딩 중일 때 기본값 반환
-    if (!highlightData?.data || isLoading) {
-      return [
-        {
-          periodLabel: periodLabel[0],
-          value: 0,
-          barKey: 'previous',
-        },
-        {
-          periodLabel: periodLabel[1],
-          value: 0,
-          barKey: 'current',
-        },
-      ];
-    }
-
-    // highlightData.data.current와 highlightData.data.previous를 직접 참조하여 React Compiler 경고 해결
-    const previousValue = highlightData.data.previous;
-    const currentValue = highlightData.data.current;
-
-    return [
-      {
-        periodLabel: periodLabel[0],
-        value: previousValue,
-        barKey: 'previous',
-      },
-      {
-        periodLabel: periodLabel[1],
-        value: currentValue,
-        barKey: 'current',
-      },
-    ];
-  }, [highlightData, activePeriod, isLoading]);
+  const chartData = useMemo<HighlightDatum[]>(() => MONTHLY_DATA, []);
 
   // CSS 변수에서 색상 가져오기 (다크모드 변경 시 재계산)
   const chartColors = useMemo<ChartColors>(
@@ -141,7 +88,6 @@ export function useHighlightsChart(activePeriod: HighlightPeriod): ChartConfig {
 
     const domainPadding = 40;
 
-    // 데이터가 없거나 로딩 중일 때 기본값 설정
     const calculatedMaxValue =
       chartData.length > 0
         ? chartData.reduce((acc, item) => Math.max(acc, item.value), 0) +
@@ -158,6 +104,7 @@ export function useHighlightsChart(activePeriod: HighlightPeriod): ChartConfig {
       data: chartData,
       maxDomain: maxValue,
       yAxisTicks: ticks,
+      isMock: true,
     };
   }, [chartColors, chartData, isDarkApplied]);
 
