@@ -7,6 +7,9 @@ interface ExampleOverlayProps {
   className?: string;
   pillClassName?: string;
   zIndex?: number;
+  dimmed?: boolean;
+  blur?: boolean;
+  dimClassName?: string;
 }
 
 const ExampleOverlay = React.forwardRef<HTMLDivElement, ExampleOverlayProps>(
@@ -16,13 +19,26 @@ const ExampleOverlay = React.forwardRef<HTMLDivElement, ExampleOverlayProps>(
       className,
       pillClassName,
       zIndex = 50,
+      dimmed = false,
+      blur = false,
+      dimClassName,
     },
     ref,
   ) => {
     return (
       <div
         ref={ref}
-        className={cn('absolute inset-0 flex items-center justify-center', className)}
+        className={cn(
+          'absolute inset-0 flex items-center justify-center',
+          dimmed
+            ? cn(
+              'bg-grey-0/60 dark:bg-black/60',
+              blur ? 'backdrop-blur-[1px]' : '',
+              dimClassName,
+            )
+            : '',
+          className,
+        )}
         style={{ zIndex, pointerEvents: 'none' }}
       >
         <div
@@ -44,4 +60,3 @@ const ExampleOverlay = React.forwardRef<HTMLDivElement, ExampleOverlayProps>(
 
 ExampleOverlay.displayName = 'ExampleOverlay';
 export { ExampleOverlay };
-
