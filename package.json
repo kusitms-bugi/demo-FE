@@ -23,7 +23,7 @@
     "lint:check": "eslint . --ext js,ts,tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck:renderer": "tsc --noEmit -p src/renderer/tsconfig.json",
+    "typecheck:renderer": "tsc --noEmit -p tsconfig.json",
     "typecheck": "pnpm run typecheck:renderer",
     "analyze": "pnpm run build:renderer"
   },

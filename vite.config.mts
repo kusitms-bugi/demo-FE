@@ -11,7 +11,6 @@ const __dirname = path.dirname(__filename);
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/',
-  root: 'src/renderer',
   plugins: [
     svgr(),
     react(),
@@ -19,23 +18,23 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@ui/': path.resolve(__dirname, 'src/renderer/src/components') + '/',
-      '@ui': path.resolve(__dirname, 'src/renderer/src/components'),
-      '@assets/': path.resolve(__dirname, 'src/renderer/src/assets') + '/',
-      '@assets': path.resolve(__dirname, 'src/renderer/src/assets'),
-      '@api/': path.resolve(__dirname, 'src/renderer/src/api') + '/',
-      '@api': path.resolve(__dirname, 'src/renderer/src/api'),
-      '@utils/': path.resolve(__dirname, 'src/renderer/src/utils') + '/',
-      '@utils': path.resolve(__dirname, 'src/renderer/src/utils'),
-      '@shared/': path.resolve(__dirname, 'src/renderer/src/shared') + '/',
-      '@shared': path.resolve(__dirname, 'src/renderer/src/shared'),
-      '@entities/': path.resolve(__dirname, 'src/renderer/src/entities') + '/',
-      '@entities': path.resolve(__dirname, 'src/renderer/src/entities'),
-      '@features/': path.resolve(__dirname, 'src/renderer/src/features') + '/',
-      '@features': path.resolve(__dirname, 'src/renderer/src/features'),
-      '@widgets/': path.resolve(__dirname, 'src/renderer/src/widgets') + '/',
-      '@widgets': path.resolve(__dirname, 'src/renderer/src/widgets'),
-      ui: path.resolve(__dirname, 'src/renderer/src/components'),
+      '@ui/': path.resolve(__dirname, 'src/components') + '/',
+      '@ui': path.resolve(__dirname, 'src/components'),
+      '@assets/': path.resolve(__dirname, 'src/assets') + '/',
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@api/': path.resolve(__dirname, 'src/api') + '/',
+      '@api': path.resolve(__dirname, 'src/api'),
+      '@utils/': path.resolve(__dirname, 'src/utils') + '/',
+      '@utils': path.resolve(__dirname, 'src/utils'),
+      '@shared/': path.resolve(__dirname, 'src/shared') + '/',
+      '@shared': path.resolve(__dirname, 'src/shared'),
+      '@entities/': path.resolve(__dirname, 'src/entities') + '/',
+      '@entities': path.resolve(__dirname, 'src/entities'),
+      '@features/': path.resolve(__dirname, 'src/features') + '/',
+      '@features': path.resolve(__dirname, 'src/features'),
+      '@widgets/': path.resolve(__dirname, 'src/widgets') + '/',
+      '@widgets': path.resolve(__dirname, 'src/widgets'),
+      ui: path.resolve(__dirname, 'src/components'),
     },
   },
   server: {
@@ -43,7 +42,7 @@ export default defineConfig({
     host: 'localhost',
   },
   build: {
-    outDir: path.resolve(__dirname, 'dist/renderer'),
+    outDir: path.resolve(__dirname, 'dist'),
     sourcemap: true,
     emptyOutDir: true,
     rollupOptions: {
