@@ -7,10 +7,11 @@ interface ToggleSwitchProps {
   onChange: (checked: boolean) => void;
   uncheckedLabel?: string;
   checkedLabel?: string;
+  disabled?: boolean;
 }
 
 const ToggleSwitch = React.forwardRef<HTMLButtonElement, ToggleSwitchProps>(
-  ({ checked, onChange, uncheckedLabel, checkedLabel }, ref) => {
+  ({ checked, onChange, uncheckedLabel, checkedLabel, disabled = false }, ref) => {
     const uncheckedRef = React.useRef<HTMLDivElement>(null);
     const checkedRef = React.useRef<HTMLDivElement>(null);
     const [indicatorWidth, setIndicatorWidth] = React.useState(0);
@@ -47,9 +48,15 @@ const ToggleSwitch = React.forwardRef<HTMLButtonElement, ToggleSwitchProps>(
         type="button"
         role="switch"
         aria-checked={checked}
-        onClick={() => onChange(!checked)}
+        aria-disabled={disabled}
+        disabled={disabled}
+        onClick={() => {
+          if (disabled) return;
+          onChange(!checked);
+        }}
         className={cn(
-          'bg-grey-25 text-caption-xs-meidum relative flex h-[28px] w-fit cursor-pointer items-center gap-2 rounded-full px-[12px]',
+          'bg-grey-25 text-caption-xs-meidum relative flex h-[28px] w-fit items-center gap-2 rounded-full px-[12px]',
+          disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer',
         )}
       >
         <span
